@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <title>Spherometer Lab - AL Science Squad</title>
+    <style>
+        :root { --bg: #0f0f0f; --accent: #bb86fc; --success: #00ffcc; --error: #ff5252; --text: #f0f0f0; --card: #1a1a1a; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .container { display: flex; background: var(--card); padding: 30px; border-radius: 25px; gap: 40px; border: 1px solid #333; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
+        canvas { background: #222; border-radius: 15px; border: 1px solid #444; }
+        .controls { width: 420px; display: flex; flex-direction: column; gap: 15px; }
+        .info-header { background: rgba(255, 82, 82, 0.1); padding: 15px; border-radius: 12px; border-left: 5px solid var(--error); font-size: 0.9em; }
+        .quiz-panel { background: #252525; padding: 20px; border-radius: 20px; border: 1px solid #3d3d3d; }
+        .input-group { display: flex; gap: 10px; margin-top: 10px; }
+        input[type=number] { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #111; color: white; font-size: 1.2em; text-align: center; }
+        .btn-submit { background: var(--success); color: #000; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-submit:hover { transform: scale(1.05); background: #00e6b8; }
+        input[type=range] { width: 100%; cursor: pointer; height: 10px; accent-color: var(--accent); margin: 15px 0; }
+        select { padding: 15px; border-radius: 12px; background: #2c2c2c; color: white; border: 1px solid #444; font-size: 1.1em; cursor: pointer; }
+        
+        /* Footer Styling */
+        .footer { margin-top: 40px; text-align: center; max-width: 600px; }
+        .invite-text { color: #e0e0e0; font-size: 1.05em; margin-bottom: 5px; line-height: 1.5; font-weight: 500; }
+        .footer-name { font-size: 1.8em; font-weight: bold; color: var(--accent); letter-spacing: 2px; margin-bottom: 10px; margin-top: 5px; }
+        
+        /* Live Emoji Animation */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+        .pointing-emoji {
+            display: inline-block;
+            font-size: 2em;
+            animation: bounce 1s infinite ease-in-out;
+            margin: 5px 0;
+        }
+
+        .footer-link a { color: var(--success); text-decoration: none; font-size: 1.2em; font-weight: bold; transition: 0.3s; }
+        .footer-link a:hover { color: #fff; text-shadow: 0 0 10px var(--success); }
+
+        #congrats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; background: rgba(0,0,0,0.7); }
+        .congrats-text { font-size: 4em; font-weight: 900; color: var(--success); text-shadow: 0 0 30px var(--success); }
+    </style>
+</head>
+<body>
+
+    <div id="congrats-overlay">
+        <div class="congrats-text">EXCELLENT!</div>
+        <div style="font-size: 2em; color: white; margin-top: 10px;">මිනුම නිවැරදියි! 🎊</div>
+    </div>
+
+    <h2 style="color: var(--accent); letter-spacing: 2px;">Spherometer Virtual Lab</h2>
+
+    <div class="container">
+        <canvas id="labCanvas" width="450" height="600"></canvas>
+        
+        <div class="controls">
+            <div class="info-header">
+                <b>පියවර:</b><br>
+                1. <b>Zero Reference</b> මගින් නියත දෝෂය කියවන්න.<br>
+                2. වස්තුව තෝරා පාඨාංකය ගෙන දෝෂය නිවැරදි කරන්න.
+            </div>
+
+            <label>මැනිය යුතු භාණ්ඩය:</label>
+            <select id="modeSelect" onchange="changeObject()">
+                <option value="zero">ශූන්‍ය සැකසුම (Zero Reference)</option>
+                <optgroup label="උස මැනීම (Height)">
+                    <option value="h1">වීදුරු තැටිය</option>
+                    <option value="h2">සිහින් කාසිය</option>
+                    <option value="h3">ලෝහ පත්‍රය</option>
+                    <option value="h4">ප්ලාස්ටික් කාඩ්පත</option>
+                    <option value="h5">සිලිකන් චිපය</option>
+                    <option value="h6">කුඩා බැටරිය</option>
+                    <option value="h7">වීදුරු කදාව</option>
+                    <option value="h8">ලී කුට්ටිය</option>
+                    <option value="h9">සබන් කැටය</option>
+                    <option value="h10">මකනය</option>
+                </optgroup>
+                <optgroup label="ගැඹුර මැනීම (Depth)">
+                    <option value="d1">කුඩා සිදුර</option>
+                    <option value="d2">තීන්ත කුප්පිය</option>
+                    <option value="d3">ලෝහ සොකට්ටුව</option>
+                    <option value="d4">ගැඹුරු ඇගිල්ල</option>
+                    <option value="d5">නලයේ ගැඹුර</option>
+                    <option value="d6">කුඩා බඳුන</option>
+                    <option value="d7">කාච පෘෂ්ඨය</option>
+                    <option value="d8">පියනක ගැඹුර</option>
+                    <option value="d9">රිං එකක ගැඹුර</option>
+                    <option value="d10">සිහින් නාලය</option>
+                </optgroup>
+            </select>
+
+            <label>ඉස්කුරුප්පුව හසුරුවන්න:</label>
+            <input type="range" id="screwSlider" min="-10" max="10" step="0.01" value="8" oninput="draw()">
+            <div id="status" style="text-align:center; font-weight:bold; font-size:1.2em; height:30px;"></div>
+
+            <div class="quiz-panel">
+                <label>නිවැරදි කළ පාඨාංකය (mm):</label>
+                <div class="input-group">
+                    <input type="number" id="userAnswer" step="0.01" placeholder="0.00" onkeydown="if(event.key==='Enter') checkAnswer()">
+                    <button class="btn-submit" onclick="checkAnswer()">Submit</button>
+                </div>
+                <button style="background:transparent; color:#444; border:none; width:100%; margin-top:10px; cursor:pointer;" onclick="alert('System Zero Error: ' + systemZeroError.toFixed(2) + '\nTrue Reading: ' + currentObjectHeight.toFixed(2))">Help: Logic</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="invite-text">
+            මෙවැනි අපහසු සිද්ධාන්ත ඉතා පහසුවෙන් ඉගෙන ගැනීමට අපගේ සමූහයට සම්බන්ධ වන්න.
+        </div>
+        <div class="pointing-emoji">👇</div>
+        <div class="footer-name">AL Science Squad 2028</div>
+        <div class="footer-link">
+            <a href="https://t.me/AL2028Everything" target="_blank">https://t.me/AL2028Everything</a>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("labCanvas");
+        const ctx = canvas.getContext("2d");
+        
+        let systemZeroError = (Math.random() * 0.12 - 0.06); 
+        let currentObjectHeight = 0;
+        let currentTarget = systemZeroError;
+
+        function changeObject() {
+            const mode = document.getElementById("modeSelect").value;
+            if(mode === "zero") {
+                currentObjectHeight = 0;
+            } else {
+                let val = (Math.random() * 7 + 1.2).toFixed(2);
+                currentObjectHeight = mode.startsWith("h") ? parseFloat(val) : -parseFloat(val);
+            }
+            currentTarget = currentObjectHeight + systemZeroError;
+            document.getElementById("screwSlider").value = 10;
+            draw();
+        }
+
+        function checkAnswer() {
+            const userVal = parseFloat(document.getElementById("userAnswer").value);
+            const diff = Math.abs(userVal - currentObjectHeight);
+            if (diff < 0.015) {
+                document.getElementById("congrats-overlay").style.display = "flex";
+                setTimeout(() => { document.getElementById("congrats-overlay").style.display = "none"; }, 3500);
+            } else {
+                alert("වැරදියි! නියත දෝෂය නිවැරදිව අඩු කළාදැයි නැවත පරීක්ෂා කරන්න.");
+            }
+        }
+
+        function draw() {
+            let h = parseFloat(document.getElementById("screwSlider").value);
+            const target = currentTarget;
+            const baseY = 400; const scale = 20;
+            const statusBox = document.getElementById("status");
+
+            if (h < target) { 
+                h = target; document.getElementById("screwSlider").value = h; 
+                statusBox.innerText = "⛔ ස්පර්ශ විය (CONTACT)"; statusBox.style.color = "var(--error)";
+            } else if (Math.abs(h - target) < 0.045) { 
+                statusBox.innerText = "✅ නිවැරදි ස්පර්ශය"; statusBox.style.color = "var(--success)";
+            } else { statusBox.innerText = ""; }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#333";
+            if (currentObjectHeight < 0) {
+                ctx.fillRect(50, baseY, 150, 150); ctx.fillRect(250, baseY, 150, 150);
+                ctx.fillStyle = "#555"; ctx.fillRect(200, baseY + (Math.abs(currentObjectHeight) * scale), 50, 8);
+            } else {
+                ctx.fillRect(50, baseY, 350, 20);
+                if (currentObjectHeight > 0) {
+                    ctx.fillStyle = "#555"; ctx.fillRect(200, baseY - (currentObjectHeight * scale), 50, currentObjectHeight * scale);
+                }
+            }
+
+            ctx.fillStyle = "#888"; ctx.fillRect(125, baseY - 180, 200, 15);
+            ctx.fillRect(135, baseY - 165, 10, 165); ctx.fillRect(305, baseY - 165, 10, 165);
+
+            ctx.strokeStyle = "#888"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(100, 50); ctx.lineTo(100, 550); ctx.stroke();
+            ctx.fillStyle = "#aaa"; ctx.font = "12px Arial"; ctx.textAlign = "right";
+            for(let i=-10; i<=15; i++) {
+                let y = (baseY - 180) - (i * scale);
+                ctx.moveTo(95, y); ctx.lineTo(100, y); ctx.stroke();
+                if(i % 5 === 0) ctx.fillText(i, 90, y + 5);
+            }
+
+            const sPos = (baseY - 180) - (h * scale);
+            ctx.fillStyle = "#aaa"; ctx.fillRect(222, sPos - 35, 6, 215);
+            ctx.beginPath(); ctx.moveTo(220, sPos + 180); ctx.lineTo(230, sPos + 180); ctx.lineTo(225, sPos + 192); ctx.fill();
+
+            let vsc = Math.round((Math.abs(h) % 1) * 100);
+            if (h < 0 && vsc !== 0) vsc = 100 - vsc;
+            ctx.fillStyle = "#ffd700"; ctx.beginPath(); ctx.ellipse(225, sPos, 85, 22, 0, 0, 2 * Math.PI); ctx.fill();
+            ctx.strokeStyle = "#000"; ctx.stroke();
+            ctx.fillStyle = "black"; ctx.font = "bold 15px Arial"; ctx.textAlign = "center"; ctx.fillText(vsc, 225, sPos + 6);
+
+            ctx.fillStyle = "#ff5252"; ctx.beginPath(); ctx.moveTo(105, sPos); ctx.lineTo(120, sPos-10); ctx.lineTo(120, sPos+10); ctx.fill();
+        }
+        changeObject();
+    </script>
+</body>
+</html>
