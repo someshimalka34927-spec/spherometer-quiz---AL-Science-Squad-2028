@@ -10,48 +10,50 @@
         body { 
             background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; 
             display: flex; flex-direction: column; align-items: center; 
-            padding: 10px; margin: 0; min-height: 100vh; overflow-x: hidden; 
+            padding: 5px; margin: 0; min-height: 100vh;
         }
         
-        .header-section { text-align: center; margin-bottom: 10px; width: 100%; }
-        .logo-container { width: 70px; height: 70px; margin: 0 auto 5px; }
+        .header-section { text-align: center; margin-top: 10px; width: 100%; }
+        .logo-container { width: 60px; height: 60px; margin: 0 auto 5px; }
         .logo-img { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
-        .main-title { font-size: 1.4em; color: var(--text); margin: 5px 0; font-weight: bold; }
+        .main-title { font-size: 1.3em; margin: 5px 0; font-weight: bold; }
         
         .visitor-box { 
-            background: rgba(0, 255, 204, 0.1); padding: 5px 15px; border-radius: 50px; 
+            background: rgba(0, 255, 204, 0.1); padding: 5px 12px; border-radius: 50px; 
             border: 1px solid var(--success); display: inline-block; margin-bottom: 10px;
-            color: var(--success); font-size: 0.85em; font-weight: bold;
+            color: var(--success); font-size: 0.8em;
         }
 
+        /* ප්‍රධාන කොටස සකස් කිරීම */
         .main-wrapper { 
-            display: flex; background: var(--card); padding: 15px; border-radius: 20px; gap: 15px; 
-            border: 1px solid #333; box-shadow: 0 15px 30px rgba(0,0,0,0.8); 
-            width: 95%; max-width: 1000px; align-items: flex-start; justify-content: center;
+            display: flex; flex-direction: row; /* PC එකේදී දෙපැත්තට */
+            background: var(--card); padding: 15px; border-radius: 20px; gap: 15px; 
+            border: 1px solid #333; width: 95%; max-width: 1000px; 
+            align-items: center; justify-content: center;
         }
 
-        /* Mobile එකේදී Canvas එක උඩට එන ලෙස සකස් කිරීම */
-        .canvas-container { width: 100%; max-width: 400px; flex-shrink: 0; position: relative; }
+        .canvas-container { width: 100%; max-width: 380px; flex-shrink: 0; }
         canvas { 
             background: #151515; border-radius: 12px; border: 1px solid #444; 
             width: 100% !important; height: auto !important; display: block;
         }
         
-        .controls { flex: 1; display: flex; flex-direction: column; gap: 10px; width: 100%; }
-        .info-header { background: rgba(255, 82, 82, 0.1); padding: 10px; border-radius: 8px; border-left: 4px solid var(--error); font-size: 0.8em; line-height: 1.4; }
+        .controls { flex: 1; display: flex; flex-direction: column; gap: 10px; width: 100%; min-width: 280px; }
+        .info-header { background: rgba(255, 82, 82, 0.1); padding: 10px; border-radius: 8px; border-left: 4px solid var(--error); font-size: 0.8em; }
 
         .quiz-panel { background: #222; padding: 12px; border-radius: 12px; border: 1px solid #333; }
         .input-group { display: flex; gap: 8px; margin-top: 5px; }
         
-        input[type=number] { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #444; background: #000; color: white; text-align: center; font-size: 1em; }
+        input[type=number] { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #444; background: #000; color: white; text-align: center; }
         .btn-submit { background: var(--success); color: #000; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         
-        input[type=range] { width: 100%; cursor: pointer; height: 10px; accent-color: var(--accent); }
-        select { padding: 10px; border-radius: 8px; background: #2c2c2c; color: white; border: 1px solid #444; width: 100%; }
+        input[type=range] { width: 100%; cursor: pointer; height: 15px; accent-color: var(--accent); }
+        select { padding: 10px; border-radius: 8px; background: #2c2c2c; color: white; border: 1px solid #444; width: 100%; font-size: 0.9em; }
         
-        .footer { margin-top: 25px; text-align: center; padding: 15px; width: 100%; }
+        /* Footer Styles */
+        .footer { margin-top: 20px; text-align: center; padding: 15px; width: 100%; }
         .footer-brand-wrap { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 5px 0; }
-        .footer-name { font-size: 1.4em; font-weight: bold; color: var(--accent); margin: 0; }
+        .footer-name { font-size: 1.3em; font-weight: bold; color: var(--accent); margin: 0; }
         .pointing-down { font-size: 1.8em; animation: bounceY 1s infinite; }
         .pointing-right { font-size: 1.5em; animation: bounceRight 0.8s infinite; }
         .pointing-left { font-size: 1.5em; animation: bounceLeft 0.8s infinite; }
@@ -60,13 +62,16 @@
         @keyframes bounceRight { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
         @keyframes bounceLeft { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-5px); } }
 
-        .footer-link a { color: var(--success); text-decoration: none; font-weight: bold; font-size: 1em; }
-
-        /* Responsive Logic */
-        @media (max-width: 800px) {
-            .main-wrapper { flex-direction: column; align-items: center; }
-            .canvas-container { max-width: 320px; } /* Mobile එකේදී Canvas එක තවත් කුඩා වේ */
-            .main-title { font-size: 1.2em; }
+        /* Mobile Responsive Logic - මෙතන තමයි වැදගත්ම කොටස */
+        @media (max-width: 768px) {
+            .main-wrapper { 
+                flex-direction: column; /* Mobile එකේදී එකක් යට එකක් */
+                padding: 10px;
+                width: 98%;
+            }
+            .canvas-container { max-width: 100%; }
+            .controls { min-width: 100%; }
+            .main-title { font-size: 1.1em; }
         }
 
         #congrats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; background: rgba(0,0,0,0.9); }
@@ -87,16 +92,16 @@
 
     <div class="main-wrapper">
         <div class="canvas-container">
-            <canvas id="labCanvas" width="400" height="550"></canvas>
+            <canvas id="labCanvas" width="400" height="500"></canvas>
         </div>
 
         <div class="controls">
             <div class="info-header">
                 <b>භාවිතා කරන ආකාරය:</b><br>
-                ඉස්කුරුප්පුව කරකවා CONTACT වූ පසු පාඨාංකය mm වලින් ලබාගන්න.
+                Slider එක කරකවා CONTACT වූ පසු පාඨාංකය mm වලින් ලබාගන්න.
             </div>
 
-            <label style="font-size: 0.9em;">භාණ්ඩය තෝරන්න:</label>
+            <label style="font-size: 0.85em;">භාණ්ඩය තෝරන්න:</label>
             <select id="modeSelect" onchange="changeObject()">
                 <option value="zero">ශූන්‍ය සැකසුම (Zero Reference)</option>
                 <optgroup label="උස මැනීම (Height)">
@@ -107,12 +112,12 @@
                 </optgroup>
             </select>
 
-            <label style="font-size: 0.9em; margin-top: 5px;">කරකවන්න:</label>
-            <input type="range" id="screwSlider" min="-10" max="10" step="0.01" value="5" oninput="draw()">
-            <div id="status" style="text-align:center; font-weight:bold; color:var(--success); height:18px; font-size: 0.85em;"></div>
+            <label style="font-size: 0.85em; margin-top: 5px;">Screw එක කරකවන්න:</label>
+            <input type="range" id="screwSlider" min="-10" max="10" step="0.01" value="8" oninput="draw()">
+            <div id="status" style="text-align:center; font-weight:bold; color:var(--success); height:18px; font-size: 0.8em;"></div>
 
             <div class="quiz-panel">
-                <label style="font-size: 0.9em;">පිළිතුර (mm):</label>
+                <label style="font-size: 0.85em;">පිළිතුර (mm):</label>
                 <div class="input-group">
                     <input type="number" id="userAnswer" step="0.01" placeholder="0.00" onkeypress="handleEnter(event)">
                     <button class="btn-submit" onclick="checkAnswer()">Submit</button>
@@ -122,7 +127,7 @@
     </div>
 
     <div class="footer">
-        <div style="font-size: 0.9em; margin-bottom: 5px;">මෙවැනි බොහෝ දේවල් ලබා ගන්න දැන්ම එක්වන්න.</div>
+        <div style="font-size: 0.85em; margin-bottom: 5px;">මෙවැනි බොහෝ දේවල් ලබා ගන්න දැන්ම එක්වන්න.</div>
         <div class="footer-brand-wrap">
             <span class="pointing-right">👉</span>
             <h2 class="footer-name">AL Science Squad 2028</h2>
@@ -135,7 +140,6 @@
     </div>
 
     <script>
-        // Simple User Count (Local)
         function updateCounter() {
             let c = localStorage.getItem('spherometer_v') || 150;
             c = parseInt(c) + 1;
@@ -160,7 +164,7 @@
                 currentObjectHeight = mode.startsWith("h") ? parseFloat(val) : -parseFloat(val);
             }
             currentTarget = currentObjectHeight + systemZeroError;
-            document.getElementById("screwSlider").value = 8;
+            document.getElementById("screwSlider").value = 9;
             draw();
         }
 
@@ -183,57 +187,52 @@
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const centerX = canvas.width / 2;
-            const baseY = 420; // පදනම තරමක් පහළට කළා
-            const scale = 18;  // Scale එක පොඩ්ඩක් අඩු කළා Screen එකට Fit වෙන්න
+            const baseY = 400;
+            const scale = 16; 
 
-            // Object
             ctx.fillStyle = "#333";
             if (currentObjectHeight >= 0) {
-                ctx.fillRect(centerX - 120, baseY, 240, 15);
+                ctx.fillRect(centerX - 100, baseY, 200, 15);
                 if(currentObjectHeight > 0) {
                     ctx.fillStyle = "#555";
-                    ctx.fillRect(centerX - 35, baseY - (currentObjectHeight * scale), 70, currentObjectHeight * scale);
+                    ctx.fillRect(centerX - 30, baseY - (currentObjectHeight * scale), 60, currentObjectHeight * scale);
                 }
             } else {
-                ctx.fillRect(centerX - 120, baseY, 80, 80);
-                ctx.fillRect(centerX + 40, baseY, 80, 80);
+                ctx.fillRect(centerX - 100, baseY, 70, 70);
+                ctx.fillRect(centerX + 30, baseY, 70, 70);
                 ctx.fillStyle = "#222";
-                ctx.fillRect(centerX - 40, baseY + (Math.abs(currentObjectHeight) * scale), 80, 5);
+                ctx.fillRect(centerX - 30, baseY + (Math.abs(currentObjectHeight) * scale), 60, 5);
             }
 
-            // Spherometer Frame
             ctx.fillStyle = "#888";
-            ctx.fillRect(centerX - 80, baseY - 150, 160, 12);
-            ctx.fillRect(centerX - 75, baseY - 138, 8, 138);
-            ctx.fillRect(centerX + 67, baseY - 138, 8, 138);
+            ctx.fillRect(centerX - 70, baseY - 130, 140, 10);
+            ctx.fillRect(centerX - 65, baseY - 120, 6, 120);
+            ctx.fillRect(centerX + 59, baseY - 120, 6, 120);
 
-            // Vertical Scale
             ctx.strokeStyle = "#aaa"; ctx.lineWidth = 2;
-            const lsX = centerX - 110;
-            ctx.beginPath(); ctx.moveTo(lsX, baseY - 300); ctx.lineTo(lsX, baseY - 50); ctx.stroke();
-            ctx.fillStyle = "#999"; ctx.font = "11px Arial"; ctx.textAlign = "right";
+            const lsX = centerX - 95;
+            ctx.beginPath(); ctx.moveTo(lsX, baseY - 280); ctx.lineTo(lsX, baseY - 40); ctx.stroke();
+            ctx.fillStyle = "#999"; ctx.font = "10px Arial"; ctx.textAlign = "right";
             for(let i=-10; i<=15; i++) {
-                let y = (baseY - 150) - (i * scale);
-                if(y > baseY-300 && y < baseY-50) {
+                let y = (baseY - 130) - (i * scale);
+                if(y > baseY-280 && y < baseY-40) {
                     ctx.beginPath(); ctx.moveTo(lsX-5, y); ctx.lineTo(lsX, y); ctx.stroke();
                     if(i % 5 === 0) ctx.fillText(i, lsX - 8, y + 4);
                 }
             }
 
-            // Screw
-            const sPos = (baseY - 150) - (h * scale);
-            ctx.fillStyle = "#999"; ctx.fillRect(centerX - 4, sPos - 40, 8, 190);
-            ctx.fillStyle = "#ffd700"; ctx.beginPath(); ctx.ellipse(centerX, sPos, 65, 18, 0, 0, 2 * Math.PI); ctx.fill();
+            const sPos = (baseY - 130) - (h * scale);
+            ctx.fillStyle = "#999"; ctx.fillRect(centerX - 3, sPos - 40, 6, 170);
+            ctx.fillStyle = "#ffd700"; ctx.beginPath(); ctx.ellipse(centerX, sPos, 60, 15, 0, 0, 2 * Math.PI); ctx.fill();
             ctx.strokeStyle = "#000"; ctx.stroke();
             
             let vsc = Math.round((Math.abs(h) % 1) * 100);
             if (h < 0 && vsc !== 0) vsc = 100 - vsc;
-            ctx.fillStyle = "black"; ctx.font = "bold 13px Arial"; ctx.textAlign = "center";
-            ctx.fillText(vsc, centerX, sPos + 5);
+            ctx.fillStyle = "black"; ctx.font = "bold 12px Arial"; ctx.textAlign = "center";
+            ctx.fillText(vsc, centerX, sPos + 4);
 
-            // Pointer
             ctx.fillStyle = "#ff5252"; ctx.beginPath();
-            ctx.moveTo(lsX + 5, sPos); ctx.lineTo(lsX + 15, sPos - 8); ctx.lineTo(lsX + 15, sPos + 8); ctx.fill();
+            ctx.moveTo(lsX + 5, sPos); ctx.lineTo(lsX + 15, sPos - 7); ctx.lineTo(lsX + 15, sPos + 7); ctx.fill();
         }
         changeObject();
     </script>
