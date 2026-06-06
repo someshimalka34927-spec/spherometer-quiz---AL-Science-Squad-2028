@@ -31,7 +31,6 @@
             align-items: center;
         }
 
-        /* PC Layout Adjustments */
         @media (min-width: 850px) {
             .main-wrapper { flex-direction: row; max-width: 900px; padding: 20px; }
             .main-title { font-size: 1.6em; }
@@ -79,13 +78,13 @@
 
     <div class="main-wrapper">
         <div class="canvas-container">
-            <canvas id="labCanvas" width="360" height="450"></canvas>
+            <canvas id="labCanvas" width="360" height="480"></canvas>
         </div>
 
         <div class="controls">
             <div class="info-header">
                 <b>භාවිතා කරන ආකාරය:</b><br>
-                භාණ්ඩය තෝරා Slider එක කරකවන්න. CONTACT වූ පසු නිවැරදි mm අගය ලබා දෙන්න.
+                භාණ්ඩය තෝරා Slider එක කරකවන්න. CONTACT වූ පසු නිවැරදි mm අගය ඇතුළත් කරන්න.
             </div>
 
             <select id="modeSelect" onchange="changeObject()">
@@ -106,7 +105,7 @@
                 </optgroup>
             </select>
 
-            <input type="range" id="screwSlider" min="-8" max="12" step="0.01" value="10" oninput="draw()">
+            <input type="range" id="screwSlider" min="-10" max="10" step="0.01" value="8" oninput="draw()">
             <div id="status" style="text-align:center; font-weight:bold; color:var(--success); height:20px; font-size: 0.8em;"></div>
 
             <div class="quiz-panel">
@@ -129,9 +128,9 @@
 
     <script>
         function updateCounter() {
-            let c = localStorage.getItem('sph_count_final') || 150;
+            let c = localStorage.getItem('sph_final_count') || 150;
             c = parseInt(c) + 1;
-            localStorage.setItem('sph_count_final', c);
+            localStorage.setItem('sph_final_count', c);
             document.getElementById('userCountDisplay').innerText = c;
         }
         updateCounter();
@@ -148,11 +147,12 @@
             const mode = document.getElementById("modeSelect").value;
             if(mode === "zero") { currentObjectHeight = 0; } 
             else {
-                let val = (Math.random() * 4 + 1.5).toFixed(2);
+                // වස්තුවේ උස -8mm සිට +8mm දක්වා පරාසයක පැවතිය හැක
+                let val = (Math.random() * 7 + 1).toFixed(2);
                 currentObjectHeight = mode.startsWith("h") ? parseFloat(val) : -parseFloat(val);
             }
             currentTarget = currentObjectHeight + systemZeroError;
-            document.getElementById("screwSlider").value = 11;
+            document.getElementById("screwSlider").value = 10;
             document.getElementById("userAnswer").value = "";
             draw();
         }
@@ -175,22 +175,22 @@
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const cx = canvas.width / 2;
-            const baseY = 320;
-            const scale = 20;
+            const baseY = 250; // පරිමාණය මැදට ගෙන ඒමට
+            const scale = 18;  // පරිමාණයේ පරතරය
 
-            // පදනම සහ වස්තුව
+            // වස්තුව ඇඳීම
             ctx.fillStyle = "#333";
             if (currentObjectHeight >= 0) {
-                ctx.fillRect(cx - 100, baseY, 200, 10);
+                ctx.fillRect(cx - 110, baseY, 220, 10); // පදනම
                 if(currentObjectHeight > 0) {
                     ctx.fillStyle = "#555";
                     ctx.fillRect(cx - 30, baseY - (currentObjectHeight * scale), 60, currentObjectHeight * scale);
                 }
             } else {
-                ctx.fillRect(cx - 100, baseY, 65, 80);
-                ctx.fillRect(cx + 35, baseY, 65, 80);
+                ctx.fillRect(cx - 110, baseY, 70, 150);
+                ctx.fillRect(cx + 40, baseY, 70, 150);
                 ctx.fillStyle = "#222";
-                ctx.fillRect(cx - 35, baseY + (Math.abs(currentObjectHeight) * scale), 70, 5);
+                ctx.fillRect(cx - 40, baseY + (Math.abs(currentObjectHeight) * scale), 80, 5);
             }
 
             // ගෝලමාන රාමුව
@@ -199,23 +199,22 @@
             ctx.fillRect(cx - 60, baseY - 110, 6, 110);
             ctx.fillRect(cx + 54, baseY - 110, 6, 110);
 
-            // ප්‍රධාන පරිමාණය
+            // සිරස් පරිමාණය (Linear Scale) -10 සිට +10 දක්වා
             ctx.strokeStyle = "#888"; ctx.lineWidth = 2;
-            const lx = cx - 90;
-            ctx.beginPath(); ctx.moveTo(lx, baseY - 250); ctx.lineTo(lx, baseY - 40); ctx.stroke();
+            const lx = cx - 95;
+            ctx.beginPath(); ctx.moveTo(lx, baseY - (10 * scale) - 20); ctx.lineTo(lx, baseY + (10 * scale) + 20); ctx.stroke();
+            
             ctx.fillStyle = "#aaa"; ctx.font = "10px Arial"; ctx.textAlign = "right";
-            for(let i=-5; i<=15; i++) {
-                let y = (baseY - 120) - (i * scale);
-                if(y > baseY - 250 && y < baseY - 40) {
-                    ctx.beginPath(); ctx.moveTo(lx-4, y); ctx.lineTo(lx, y); ctx.stroke();
-                    if(i % 5 === 0) ctx.fillText(i, lx - 7, y + 3);
-                }
+            for(let i = -10; i <= 10; i++) {
+                let y = baseY - (i * scale);
+                ctx.beginPath(); ctx.moveTo(lx - 5, y); ctx.lineTo(lx, y); ctx.stroke();
+                if(i % 5 === 0) ctx.fillText(i, lx - 8, y + 3);
             }
 
-            // ඉස්කුරුප්පුව
-            const sY = (baseY - 120) - (h * scale);
-            ctx.fillStyle = "#999"; ctx.fillRect(cx - 3, sY - 40, 6, 160);
-            ctx.fillStyle = "#ffd700"; ctx.beginPath(); ctx.ellipse(cx, sY, 55, 15, 0, 0, 2 * Math.PI); ctx.fill();
+            // ඉස්කුරුප්පුව සහ වෘත්තාකාර පරිමාණය
+            const sY = baseY - (h * scale);
+            ctx.fillStyle = "#999"; ctx.fillRect(cx - 3, sY - 50, 6, 200); // Screw shaft
+            ctx.fillStyle = "#ffd700"; ctx.beginPath(); ctx.ellipse(cx, sY, 58, 16, 0, 0, 2 * Math.PI); ctx.fill();
             ctx.strokeStyle = "#000"; ctx.stroke();
             
             let v = Math.round((Math.abs(h) % 1) * 100);
