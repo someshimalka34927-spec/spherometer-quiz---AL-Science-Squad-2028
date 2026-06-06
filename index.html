@@ -13,21 +13,18 @@
             padding: 10px; margin: 0; min-height: 100vh; overflow-x: hidden; 
         }
         
-        /* Header */
         .header-section { text-align: center; margin-bottom: 15px; width: 100%; }
         .logo-container { width: 90px; height: 90px; margin: 0 auto 10px; }
         .logo-img { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--accent); object-fit: cover; }
         .main-title { font-size: 1.6em; color: var(--text); margin: 5px 0; font-weight: bold; }
         .sub-title { font-size: 1em; color: var(--accent); letter-spacing: 1px; }
 
-        /* Main Container */
         .main-wrapper { 
             display: flex; background: var(--card); padding: 20px; border-radius: 25px; gap: 30px; 
             border: 1px solid #333; box-shadow: 0 30px 60px rgba(0,0,0,0.8); 
             width: 95%; max-width: 1200px; align-items: center; justify-content: center;
         }
 
-        /* Responsive Canvas */
         .canvas-container { flex-shrink: 0; width: 100%; max-width: 480px; }
         canvas { 
             background: #222; border-radius: 15px; border: 1px solid #444; 
@@ -35,11 +32,7 @@
         }
         
         .controls { flex: 1; display: flex; flex-direction: column; gap: 15px; width: 100%; min-width: 300px; }
-        
-        .info-header { 
-            background: rgba(255, 82, 82, 0.1); padding: 15px; border-radius: 12px; 
-            border-left: 5px solid var(--error); font-size: 0.9em; line-height: 1.5; 
-        }
+        .info-header { background: rgba(255, 82, 82, 0.1); padding: 15px; border-radius: 12px; border-left: 5px solid var(--error); font-size: 0.9em; line-height: 1.5; }
 
         .quiz-panel { background: #252525; padding: 20px; border-radius: 20px; border: 1px solid #3d3d3d; }
         .input-group { display: flex; gap: 10px; margin-top: 10px; }
@@ -51,24 +44,19 @@
         select { padding: 12px; border-radius: 10px; background: #2c2c2c; color: white; border: 1px solid #444; font-size: 1em; cursor: pointer; width: 100%; }
         
         .visitor-box { background: #1a1a1a; padding: 5px 15px; border-radius: 50px; border: 1px solid #444; display: inline-block; margin-top: 10px; font-family: monospace; color: var(--success); font-size: 0.9em; }
-
         .footer { margin-top: 30px; text-align: center; width: 100%; max-width: 600px; padding-bottom: 30px; }
         .footer-name { font-size: 1.5em; font-weight: bold; color: var(--accent); margin: 8px 0; }
         .footer-link a { color: var(--success); text-decoration: none; font-weight: bold; font-size: 1em; word-break: break-all; }
 
-        /* Tablet & Desktop Layout */
         @media (min-width: 900px) {
             .main-wrapper { flex-direction: row; padding: 40px; gap: 50px; }
             .main-title { font-size: 2.2em; }
-            .header-section { margin-bottom: 25px; }
             .logo-container { width: 120px; height: 120px; }
         }
 
-        /* Mobile Layout */
         @media (max-width: 899px) {
             .main-wrapper { flex-direction: column; padding: 15px; gap: 20px; width: 92%; }
             .controls { min-width: 100%; }
-            .info-header { font-size: 0.8em; }
         }
 
         #congrats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; background: rgba(0,0,0,0.85); }
@@ -83,9 +71,7 @@
     </div>
 
     <div class="header-section">
-        <div class="logo-container">
-            <img src="photo_2026-06-02_10-22-04.jpg" alt="Logo" class="logo-img">
-        </div>
+        <div class="logo-container"><img src="photo_2026-06-02_10-22-04.jpg" alt="Logo" class="logo-img"></div>
         <div class="main-title">ගෝලමානය AI Simulation</div>
         <div class="sub-title">AL Science Squad 2028</div>
         <div class="visitor-box">🌐 පරිශීලකයන්: <span id="count">150+</span></div>
@@ -93,7 +79,7 @@
 
     <div class="main-wrapper">
         <div class="canvas-container">
-            <canvas id="labCanvas" width="480" height="650"></canvas>
+            <canvas id="labCanvas" width="480" height="700"></canvas>
         </div>
 
         <div class="controls">
@@ -178,7 +164,10 @@
 
         function draw() {
             let h = parseFloat(document.getElementById("screwSlider").value);
-            const target = currentTarget; const baseY = 420; const scale = 22;
+            const target = currentTarget; 
+            // baseY ටිකක් වැඩි කළා (420 සිට 480 දක්වා) ගෝලමානය පහළට ගැනීමට
+            const baseY = 480; 
+            const scale = 22;
             const statusBox = document.getElementById("status");
 
             if (h < target) { h = target; document.getElementById("screwSlider").value = h; 
@@ -196,22 +185,42 @@
                 ctx.fillRect(40, baseY, 400, 25);
                 if (currentObjectHeight > 0) { ctx.fillStyle = "#555"; ctx.fillRect(190, baseY - (currentObjectHeight * scale), 100, currentObjectHeight * scale); }
             }
-            ctx.fillStyle = "#888"; ctx.fillRect(120, baseY - 200, 240, 18);
-            ctx.fillRect(130, baseY - 182, 12, 182); ctx.fillRect(338, baseY - 182, 12, 182);
-            ctx.strokeStyle = "#888"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(90, 50); ctx.lineTo(90, 550); ctx.stroke();
+
+            // ගෝලමානය ඇඳීම
+            ctx.fillStyle = "#888"; 
+            ctx.fillRect(120, baseY - 200, 240, 18); // Main plate
+            ctx.fillRect(130, baseY - 182, 12, 182); // Leg 1
+            ctx.fillRect(338, baseY - 182, 12, 182); // Leg 2
+            
+            // Linear Scale
+            ctx.strokeStyle = "#888"; ctx.lineWidth = 3; 
+            ctx.beginPath(); ctx.moveTo(90, 80); ctx.lineTo(90, 580); ctx.stroke();
+            
             ctx.fillStyle = "#aaa"; ctx.font = "13px Arial"; ctx.textAlign = "right";
             for(let i=-10; i<=15; i++) {
                 let y = (baseY - 200) - (i * scale);
                 ctx.moveTo(82, y); ctx.lineTo(90, y); ctx.stroke();
                 if(i % 5 === 0) ctx.fillText(i, 78, y + 5);
             }
+
             const sPos = (baseY - 200) - (h * scale);
-            ctx.fillStyle = "#aaa"; ctx.fillRect(235, sPos - 40, 8, 240);
+            
+            // Screw
+            ctx.fillStyle = "#aaa"; ctx.fillRect(235, sPos - 50, 8, 250);
             ctx.beginPath(); ctx.moveTo(230, sPos + 200); ctx.lineTo(250, sPos + 200); ctx.lineTo(240, sPos + 215); ctx.fill();
+            
+            // Circular Scale
             let vsc = Math.round((Math.abs(h) % 1) * 100); if (h < 0 && vsc !== 0) vsc = 100 - vsc;
-            ctx.fillStyle = "#ffd700"; ctx.beginPath(); ctx.ellipse(240, sPos, 90, 25, 0, 0, 2 * Math.PI); ctx.fill();
-            ctx.strokeStyle = "#000"; ctx.stroke(); ctx.fillStyle = "black"; ctx.font = "bold 16px Arial"; ctx.textAlign = "center"; ctx.fillText(vsc, 240, sPos + 6);
-            ctx.fillStyle = "#ff5252"; ctx.beginPath(); ctx.moveTo(100, sPos); ctx.lineTo(115, sPos-12); ctx.lineTo(115, sPos+12); ctx.fill();
+            ctx.fillStyle = "#ffd700"; 
+            ctx.beginPath(); ctx.ellipse(240, sPos, 90, 25, 0, 0, 2 * Math.PI); ctx.fill();
+            ctx.strokeStyle = "#000"; ctx.stroke(); 
+            
+            ctx.fillStyle = "black"; ctx.font = "bold 16px Arial"; ctx.textAlign = "center"; 
+            ctx.fillText(vsc, 240, sPos + 6);
+            
+            // Pointer
+            ctx.fillStyle = "#ff5252"; ctx.beginPath(); 
+            ctx.moveTo(100, sPos); ctx.lineTo(115, sPos-12); ctx.lineTo(115, sPos+12); ctx.fill();
         }
         changeObject();
     </script>
