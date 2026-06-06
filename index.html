@@ -8,14 +8,12 @@
         :root { --bg: #0f0f0f; --accent: #bb86fc; --success: #00ffcc; --error: #ff5252; --text: #f0f0f0; --card: #1a1a1a; }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; min-height: 100vh; }
         
-        /* Header Section */
         .header-section { text-align: center; margin-bottom: 25px; width: 100%; }
         .logo-container { width: 110px; height: 110px; margin: 0 auto 10px; }
         .logo-img { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--accent); box-shadow: 0 0 20px rgba(187, 134, 252, 0.4); object-fit: cover; }
         .main-title { font-size: 2em; color: var(--text); margin: 5px 0; font-weight: bold; }
         .sub-title { font-size: 1.2em; color: var(--accent); letter-spacing: 1px; }
 
-        /* Landscape Layout Container */
         .main-wrapper { 
             display: flex; 
             background: var(--card); 
@@ -24,21 +22,14 @@
             gap: 50px; 
             border: 1px solid #333; 
             box-shadow: 0 25px 70px rgba(0,0,0,0.9); 
-            max-width: 1000px; /* ලෑන්ඩ්ස්කේප් පෙනුම සඳහා පළල වැඩි කළා */
+            max-width: 1000px;
             align-items: flex-start;
-            flex-direction: row; /* අනිවාර්යයෙන්ම දෙපසට පෙන්වීමට */
+            flex-direction: row;
         }
 
         canvas { background: #222; border-radius: 20px; border: 1px solid #444; flex-shrink: 0; }
         
-        .controls { 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 18px; 
-            min-width: 380px; 
-        }
-
+        .controls { flex: 1; display: flex; flex-direction: column; gap: 18px; min-width: 380px; }
         .info-header { background: rgba(255, 82, 82, 0.1); padding: 15px; border-radius: 12px; border-left: 5px solid var(--error); font-size: 0.9em; line-height: 1.6; }
         .quiz-panel { background: #252525; padding: 20px; border-radius: 20px; border: 1px solid #3d3d3d; }
         .input-group { display: flex; gap: 10px; margin-top: 10px; }
@@ -52,14 +43,12 @@
         
         .visitor-box { background: #1a1a1a; padding: 6px 18px; border-radius: 50px; border: 1px solid #444; display: inline-block; margin-top: 10px; font-family: monospace; color: var(--success); }
 
-        /* Footer */
         .footer { margin-top: 40px; text-align: center; max-width: 700px; padding-bottom: 30px; }
         .footer-name { font-size: 1.7em; font-weight: bold; color: var(--accent); margin: 10px 0; }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
         .pointing-emoji { display: inline-block; font-size: 2.2em; animation: bounce 1s infinite ease-in-out; margin: 5px 0; }
         .footer-link a { color: var(--success); text-decoration: none; font-weight: bold; font-size: 1.1em; }
 
-        /* Mobile Optimization: ෆෝන් එකකින් බලද්දී පමණක් Portrait වීමට */
         @media (max-width: 900px) {
             .main-wrapper { flex-direction: column; align-items: center; gap: 30px; padding: 20px; }
             .controls { min-width: 100%; }
@@ -95,32 +84,28 @@
                 2. ඉන්පසු වස්තුවක් තෝරා, ඉස්කුරුප්පුව කරකවා නිවැරදි මිනුම (True Reading) ගණනය කරන්න.
             </div>
 
-            <div style="display:flex; flex-direction:column; gap:8px;">
-                <label>මැනිය යුතු භාණ්ඩය තෝරන්න:</label>
-                <select id="modeSelect" onchange="changeObject()">
-                    <option value="zero">ශූන්‍ය සැකසුම (Zero Reference)</option>
-                    <optgroup label="උස මැනීම (Height)">
-                        <option value="h1">වීදුරු තැටිය</option><option value="h2">සිහින් කාසිය</option>
-                        <option value="h3">ලෝහ පත්‍රය</option><option value="h4">ප්ලාස්ටික් කාඩ්පත</option>
-                        <option value="h5">සිලිකන් චිපය</option><option value="h6">කුඩා බැටරිය</option>
-                    </optgroup>
-                    <optgroup label="ගැඹුර මැනීම (Depth)">
-                        <option value="d1">කුඩා සිදුර</option><option value="d2">තීන්ත කුප්පිය</option>
-                        <option value="d7">කාච පෘෂ්ඨය</option>
-                    </optgroup>
-                    </select>
-            </div>
+            <label>මැනිය යුතු භාණ්ඩය තෝරන්න:</label>
+            <select id="modeSelect" onchange="changeObject()">
+                <option value="zero">ශූන්‍ය සැකසුම (Zero Reference)</option>
+                <optgroup label="උස මැනීම (Height)">
+                    <option value="h1">වීදුරු තැටිය</option><option value="h2">සිහින් කාසිය</option>
+                    <option value="h3">ලෝහ පත්‍රය</option><option value="h4">ප්ලාස්ටික් කාඩ්පත</option>
+                    <option value="h5">සිලිකන් චිපය</option><option value="h6">කුඩා බැටරිය</option>
+                </optgroup>
+                <optgroup label="ගැඹුර මැනීම (Depth)">
+                    <option value="d1">කුඩා සිදුර</option><option value="d2">තීන්ත කුප්පිය</option>
+                    <option value="d7">කාච පෘෂ්ඨය</option>
+                </optgroup>
+            </select>
 
-            <div style="display:flex; flex-direction:column; gap:5px;">
-                <label>ඉස්කුරුප්පුව කරකවන්න:</label>
-                <input type="range" id="screwSlider" min="-10" max="10" step="0.01" value="8" oninput="draw()">
-                <div id="status" style="text-align:center; font-weight:bold; color:var(--success); height:25px;"></div>
-            </div>
+            <label>ඉස්කුරුප්පුව කරකවන්න:</label>
+            <input type="range" id="screwSlider" min="-10" max="10" step="0.01" value="8" oninput="draw()">
+            <div id="status" style="text-align:center; font-weight:bold; color:var(--success); height:25px;"></div>
 
             <div class="quiz-panel">
                 <label>ඔබේ පිළිතුර ඇතුලත් කරන්න (mm):</label>
                 <div class="input-group">
-                    <input type="number" id="userAnswer" step="0.01" placeholder="0.00">
+                    <input type="number" id="userAnswer" step="0.01" placeholder="0.00" onkeydown="if(event.key === 'Enter') checkAnswer()">
                     <button class="btn-submit" onclick="checkAnswer()">Submit</button>
                 </div>
             </div>
@@ -135,7 +120,6 @@
     </div>
 
     <script>
-        // Visitor Counter
         let count = localStorage.getItem('spherometer_v') || 150;
         count = parseInt(count) + 1;
         localStorage.setItem('spherometer_v', count);
@@ -156,11 +140,13 @@
             }
             currentTarget = currentObjectHeight + systemZeroError;
             document.getElementById("screwSlider").value = 10;
+            document.getElementById("userAnswer").value = ""; // Clear input on change
             draw();
         }
 
         function checkAnswer() {
             const userVal = parseFloat(document.getElementById("userAnswer").value);
+            if (isNaN(userVal)) return;
             if (Math.abs(userVal - currentObjectHeight) < 0.015) {
                 document.getElementById("congrats-overlay").style.display = "flex";
                 setTimeout(() => { document.getElementById("congrats-overlay").style.display = "none"; }, 3500);
