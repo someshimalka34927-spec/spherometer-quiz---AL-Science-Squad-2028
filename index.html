@@ -6,56 +6,25 @@
     <title>Spherometer Lab - AL Science Squad</title>
     <style>
         :root { --bg: #0f0f0f; --accent: #bb86fc; --success: #00ffcc; --error: #ff5252; --text: #f0f0f0; --card: #1a1a1a; }
-        
-        body { 
-            background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; 
-            display: flex; flex-direction: column; align-items: center; 
-            padding: 5px; margin: 0; min-height: 100vh;
-        }
-        
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 5px; margin: 0; min-height: 100vh; }
         .header-section { text-align: center; margin-top: 10px; width: 100%; }
         .logo-container { width: 60px; height: 60px; margin: 0 auto 5px; }
         .logo-img { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
         .main-title { font-size: 1.4em; margin: 5px 0; font-weight: bold; }
-        
-        .visitor-box { 
-            background: rgba(0, 255, 204, 0.1); padding: 5px 15px; border-radius: 50px; 
-            border: 1px solid var(--success); display: inline-block; margin-bottom: 10px;
-            color: var(--success); font-size: 0.85em;
-        }
-
-        .main-wrapper { 
-            display: flex; flex-direction: column; 
-            background: var(--card); padding: 15px; border-radius: 20px; gap: 15px; 
-            border: 1px solid #333; width: 95%; max-width: 500px; 
-            align-items: center;
-        }
-
-        @media (min-width: 850px) {
-            .main-wrapper { flex-direction: row; max-width: 900px; padding: 25px; }
-        }
-
+        .visitor-box { background: rgba(0, 255, 204, 0.1); padding: 5px 15px; border-radius: 50px; border: 1px solid var(--success); display: inline-block; margin-bottom: 10px; color: var(--success); font-size: 0.85em; }
+        .main-wrapper { display: flex; flex-direction: column; background: var(--card); padding: 15px; border-radius: 20px; gap: 15px; border: 1px solid #333; width: 95%; max-width: 500px; align-items: center; }
+        @media (min-width: 850px) { .main-wrapper { flex-direction: row; max-width: 900px; } }
         .canvas-container { width: 100%; max-width: 360px; }
-        canvas { 
-            background: #151515; border-radius: 12px; border: 1px solid #444; 
-            width: 100% !important; height: auto !important; display: block;
-        }
-        
+        canvas { background: #151515; border-radius: 12px; border: 1px solid #444; width: 100% !important; height: auto !important; display: block; }
         .controls { flex: 1; display: flex; flex-direction: column; gap: 12px; width: 100%; }
         .info-header { background: rgba(255, 82, 82, 0.1); padding: 10px; border-radius: 10px; border-left: 4px solid var(--error); font-size: 0.8em; }
-
         .quiz-panel { background: #222; padding: 15px; border-radius: 15px; border: 1px solid #333; }
         .input-group { display: flex; gap: 8px; margin-top: 8px; }
-        
         input[type=number] { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #000; color: white; text-align: center; font-size: 1.1em; }
         .btn-submit { background: var(--success); color: #000; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        
         input[type=range] { width: 100%; cursor: pointer; height: 15px; accent-color: var(--accent); margin: 10px 0; }
         select { padding: 12px; border-radius: 8px; background: #2c2c2c; color: white; border: 1px solid #444; width: 100%; font-size: 1em; }
-        
         .footer { margin-top: 25px; text-align: center; padding: 20px; width: 100%; }
-        .footer-name { font-size: 1.3em; font-weight: bold; color: var(--accent); margin: 5px 0; }
-
         #congrats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; background: rgba(0,0,0,0.9); }
     </style>
 </head>
@@ -78,9 +47,7 @@
         </div>
 
         <div class="controls">
-            <div class="info-header">
-                <b>භාවිතය:</b> Slider එක පහළට ගෙන ගොස් වස්තුවේ ස්පර්ශ කරන්න. Contact වූ පසු පාඨාංකය mm වලින් ලබා දෙන්න.
-            </div>
+            <div class="info-header"><b>භාවිතය:</b> Slider එක පහළට ගෙන ගොස් වස්තුවේ ස්පර්ශ කරන්න. (සෘණ අගයන් දෙසට යද්දී කුර පහළට යයි)</div>
 
             <select id="modeSelect" onchange="changeObject()">
                 <option value="zero">ශූන්‍ය සැකසුම (Zero Reference)</option>
@@ -100,7 +67,7 @@
                 </optgroup>
             </select>
 
-            <input type="range" id="screwSlider" min="-10.0" max="10.0" step="0.01" value="10" oninput="draw()">
+            <input type="range" id="screwSlider" min="-10.0" max="10.0" step="0.01" value="8" oninput="draw()">
             <div id="status" style="text-align:center; font-weight:bold; color:var(--success); height:25px;"></div>
 
             <div class="quiz-panel">
@@ -114,18 +81,11 @@
     </div>
 
     <div class="footer">
-        <h2 class="footer-name">AL Science Squad 2028</h2>
+        <h2 style="color:var(--accent); font-size:1.2em;">AL Science Squad 2028</h2>
         <a href="https://t.me/AL2028Everything" target="_blank" style="color:var(--success); text-decoration:none; font-weight:bold;">Join Telegram Group</a>
     </div>
 
     <script>
-        function updateCounter() {
-            let c = localStorage.getItem('sph_final_v1') || 150;
-            c = parseInt(c) + 1; localStorage.setItem('sph_final_v1', c);
-            document.getElementById('userCountDisplay').innerText = c;
-        }
-        updateCounter();
-
         const canvas = document.getElementById("labCanvas");
         const ctx = canvas.getContext("2d");
         let currentObjectHeight = 0;
@@ -150,13 +110,13 @@
             if (Math.abs(userVal - currentObjectHeight) < 0.02) {
                 document.getElementById("congrats-overlay").style.display = "flex";
                 setTimeout(() => { document.getElementById("congrats-overlay").style.display = "none"; }, 2500);
-            } else { alert("පාඨාංකය වැරදියි! නැවත උත්සාහ කරන්න."); }
+            } else { alert("පාඨාංකය වැරදියි!"); }
         }
 
         function draw() {
             let h = parseFloat(document.getElementById("screwSlider").value);
             
-            // Contact Logic: ඉස්කුරුප්පුව Target එකේ වැදුණු පසු තවත් පල්ලෙහාට යාම වැළැක්වීම
+            // CONTACT LOGIC: පහළට යද්දී (h අඩු වෙද්දී) Target එකේ වැදුණු පසු තවත් පහළට යාම වැළැක්වීම
             if (h < currentTarget) { 
                 h = currentTarget; 
                 document.getElementById("screwSlider").value = h; 
@@ -168,64 +128,64 @@
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const cx = canvas.width / 2;
-            const baseY = 240; 
+            const baseY = 240; // 0 line
             const scale = 20;
 
-            // වස්තුව ඇඳීම
+            // DRAW OBJECT (වස්තුව ඇඳීම)
             ctx.fillStyle = "#333";
             if (currentObjectHeight >= 0) {
-                ctx.fillRect(cx - 120, baseY, 240, 10);
+                ctx.fillRect(cx - 120, baseY, 240, 10); // Base plane
                 if(currentObjectHeight > 0) {
                     ctx.fillStyle = "#555";
                     ctx.fillRect(cx - 35, baseY - (currentObjectHeight * scale), 70, currentObjectHeight * scale);
                 }
             } else {
-                ctx.fillRect(cx - 120, baseY, 80, 180);
-                ctx.fillRect(cx + 40, baseY, 80, 180);
+                ctx.fillRect(cx - 120, baseY, 80, 200);
+                ctx.fillRect(cx + 40, baseY, 80, 200);
                 ctx.fillStyle = "#222";
                 ctx.fillRect(cx - 40, baseY + (Math.abs(currentObjectHeight) * scale), 80, 5);
             }
 
-            // ගෝලමානයේ රාමුව (Fixed Legs)
+            // SPHEROMETER LEGS (නිශ්චල පාද)
             ctx.fillStyle = "#777";
-            ctx.fillRect(cx - 70, baseY - 120, 140, 12);
-            ctx.fillRect(cx - 65, baseY - 110, 8, 110);
-            ctx.fillRect(cx + 57, baseY - 110, 8, 110);
+            ctx.fillRect(cx - 70, baseY - 120, 140, 12); // Top frame
+            ctx.fillRect(cx - 65, baseY - 110, 8, 110);  // Left leg
+            ctx.fillRect(cx + 57, baseY - 110, 8, 110);  // Right leg
 
-            // සිරස් පරිමාණය (-10 to 10)
+            // VERTICAL SCALE (+10 to -10)
             ctx.strokeStyle = "#888"; ctx.lineWidth = 2;
-            const lx = cx - 100;
+            const lx = cx - 105;
             ctx.beginPath(); 
             ctx.moveTo(lx, baseY - (10 * scale) - 20); 
             ctx.lineTo(lx, baseY + (10 * scale) + 20); ctx.stroke();
             
             ctx.fillStyle = "#aaa"; ctx.font = "10px Arial"; ctx.textAlign = "right";
             for(let i = -10; i <= 10; i++) {
-                let y = baseY - (i * scale);
+                let y = baseY - (i * scale); // මෙතනදී i ප්ලස් නම් y උඩට යයි, i මයිනස් නම් y පල්ලෙහාට යයි
                 ctx.beginPath(); ctx.moveTo(lx - 5, y); ctx.lineTo(lx, y); ctx.stroke();
                 if(i % 5 === 0) ctx.fillText(i, lx - 8, y + 3);
             }
 
-            // චලනය වන ඉස්කුරුප්පුව සහ වෘත්තාකාර පරිමාණය
-            const screwY = baseY - (h * scale);
+            // MOVING SCREW (චලනය වන කුර)
+            const screwBottomY = baseY - (h * scale);
             ctx.fillStyle = "#999"; 
-            ctx.fillRect(cx - 4, screwY - 180, 8, 180); // Shaft
+            ctx.fillRect(cx - 4, screwBottomY - 180, 8, 180); // Shaft
             
             ctx.fillStyle = "#ffd700"; 
             ctx.beginPath(); 
-            ctx.ellipse(cx, screwY, 60, 18, 0, 0, 2 * Math.PI); 
+            ctx.ellipse(cx, screwBottomY, 60, 18, 0, 0, 2 * Math.PI); 
             ctx.fill(); ctx.stroke();
             
-            // වෘත්තාකාර පරිමාණයේ අගය
+            // CIRCULAR SCALE READING
             let v = Math.round((Math.abs(h) % 1) * 100);
             if (h < 0 && v !== 0) v = 100 - v;
             if (v === 100) v = 0;
             ctx.fillStyle = "black"; ctx.font = "bold 13px Arial"; ctx.textAlign = "center";
-            ctx.fillText(v, cx, screwY + 5);
+            ctx.fillText(v, cx, screwBottomY + 5);
 
-            // රතු දර්ශකය
+            // RED POINTER
             ctx.fillStyle = "#ff5252"; ctx.beginPath();
-            ctx.moveTo(lx + 4, screwY); ctx.lineTo(lx + 15, screwY - 8); ctx.lineTo(lx + 15, screwY + 8); ctx.fill();
+            ctx.moveTo(lx + 4, screwBottomY); ctx.lineTo(lx + 15, screwBottomY - 8); ctx.lineTo(lx + 15, screwBottomY + 8); ctx.fill();
         }
         changeObject();
     </script>
