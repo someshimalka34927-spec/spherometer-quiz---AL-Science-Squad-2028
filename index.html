@@ -81,7 +81,7 @@
             <div class="info-header">
                 <b>භාවිතා කරන ආකාරය:</b><br>
                 1. මුලින්ම <b>Zero Reference</b> තෝරා දෝෂය බලන්න.<br>
-                2. ඉන්පසු වස්තුවක් තෝරා, ඉස්කුරුප්පුව කරකවා නිවැරදි මිනුම (True Reading) ගණනය කරන්න.
+                2. වස්තුවක් තෝරා, ඉස්කුරුප්පුව කරකවා නිවැරදි මිනුම (True Reading) ගණනය කරන්න.
             </div>
 
             <label>මැනිය යුතු භාණ්ඩය තෝරන්න:</label>
@@ -105,8 +105,8 @@
             <div class="quiz-panel">
                 <label>ඔබේ පිළිතුර ඇතුලත් කරන්න (mm):</label>
                 <div class="input-group">
-                    <input type="number" id="userAnswer" step="0.01" placeholder="0.00" onkeydown="if(event.key === 'Enter') checkAnswer()">
-                    <button class="btn-submit" onclick="checkAnswer()">Submit</button>
+                    <input type="number" id="userAnswer" step="0.01" placeholder="0.00" onkeypress="handleEnter(event)">
+                    <button id="submitBtn" class="btn-submit" onclick="checkAnswer()">Submit</button>
                 </div>
             </div>
         </div>
@@ -120,6 +120,13 @@
     </div>
 
     <script>
+        // Enter Key එක හඳුනා ගැනීමට සරල ෆන්ක්ෂන් එකක්
+        function handleEnter(e) {
+            if (e.key === "Enter" || e.keyCode === 13) {
+                checkAnswer();
+            }
+        }
+
         let count = localStorage.getItem('spherometer_v') || 150;
         count = parseInt(count) + 1;
         localStorage.setItem('spherometer_v', count);
@@ -140,7 +147,7 @@
             }
             currentTarget = currentObjectHeight + systemZeroError;
             document.getElementById("screwSlider").value = 10;
-            document.getElementById("userAnswer").value = ""; // Clear input on change
+            document.getElementById("userAnswer").value = ""; 
             draw();
         }
 
