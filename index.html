@@ -13,7 +13,7 @@
         .main-title { font-size: 1.2em; margin: 5px 0; font-weight: bold; }
         .visitor-box { background: rgba(0, 255, 204, 0.1); padding: 4px 12px; border-radius: 50px; border: 1px solid var(--success); display: inline-block; margin-bottom: 8px; color: var(--success); font-size: 0.75em; }
         .main-wrapper { display: flex; flex-direction: column; background: var(--card); padding: 10px; border-radius: 15px; gap: 10px; border: 1px solid #333; width: 98%; max-width: 500px; align-items: center; }
-        @media (min-width: 850px) { .main-wrapper { flex-direction: row; max-width: 900px; padding: 20px; } .main-title { font-size: 1.6em; } }
+        @media (min-width: 850px) { .main-wrapper { flex-direction: row; max-width: 900px; padding: 20px; } }
         .canvas-container { width: 100%; max-width: 360px; }
         canvas { background: #151515; border-radius: 10px; border: 1px solid #444; width: 100% !important; height: auto !important; display: block; }
         .controls { flex: 1; display: flex; flex-direction: column; gap: 8px; width: 100%; }
@@ -25,7 +25,6 @@
         input[type=range] { width: 100%; cursor: pointer; height: 15px; accent-color: var(--accent); margin: 5px 0; }
         select { padding: 10px; border-radius: 8px; background: #2c2c2c; color: white; border: 1px solid #444; width: 100%; font-size: 0.9em; }
         .footer { margin-top: 20px; text-align: center; padding: 15px; width: 100%; }
-        .footer-name { font-size: 1.2em; font-weight: bold; color: var(--accent); margin: 5px 0; }
         #congrats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; background: rgba(0,0,0,0.9); }
     </style>
 </head>
@@ -48,7 +47,7 @@
         </div>
 
         <div class="controls">
-            <div class="info-header"><b>භාවිතය:</b> භාණ්ඩය තෝරා Slider එක කරකවන්න. CONTACT වූ පසු mm අගය ඇතුළත් කරන්න.</div>
+            <div class="info-header"><b>භාවිතය:</b> Slider එක පහළට ගෙන ගොස් වස්තුවේ ස්පර්ශ කරන්න. (Contact වූ පසු පාඨාංකය ලබාගන්න)</div>
 
             <select id="modeSelect" onchange="changeObject()">
                 <option value="zero">ශූන්‍ය සැකසුම (Zero Reference)</option>
@@ -56,15 +55,10 @@
                     <option value="h1">1. වීදුරු තැටිය</option><option value="h2">2. සිහින් කාසිය</option>
                     <option value="h3">3. ලෝහ පත්‍රය</option><option value="h4">4. ප්ලාස්ටික් කාඩ්පත</option>
                     <option value="h5">5. සිලිකන් චිපය</option><option value="h6">6. කුඩා බැටරිය</option>
-                    <option value="h7">7. වීදුරු කදාව</option><option value="h8">8. ලී කුට්ටිය</option>
-                    <option value="h9">9. සබන් කැටය</option><option value="h10">10. මකනය</option>
                 </optgroup>
                 <optgroup label="--- ගැඹුර මැනීම (Depth) ---">
                     <option value="d1">11. කුඩා සිදුර</option><option value="d2">12. තීන්ත කුප්පිය</option>
-                    <option value="d3">13. ලෝහ සොකට්ටුව</option><option value="d4">14. ගැඹුරු ඇඟිල්ල</option>
-                    <option value="d5">15. නලයේ ගැඹුර</option><option value="d6">16. කුඩා බඳුන</option>
-                    <option value="d7">17. කාච පෘෂ්ඨය</option><option value="d8">18. පියනක ගැඹුර</option>
-                    <option value="d9">19. රිං එකක ගැඹුර</option><option value="d10">20. සිහින් නාලය</option>
+                    <option value="d3">13. ලෝහ සොකට්ටුව</option>
                 </optgroup>
             </select>
 
@@ -82,14 +76,14 @@
     </div>
 
     <div class="footer">
-        <h2 class="footer-name">AL Science Squad 2028</h2>
-        <a href="https://t.me/AL2028Everything" target="_blank" style="color:var(--success); text-decoration:none; font-weight:bold;">Join Telegram Group</a>
+        <h2 style="color:var(--accent); font-size:1.2em;">AL Science Squad 2028</h2>
+        <a href="https://t.me/AL2028Everything" target="_blank" style="color:var(--success); text-decoration:none; font-weight:bold;">Join Telegram</a>
     </div>
 
     <script>
         function updateCounter() {
-            let c = localStorage.getItem('sph_v_final_final') || 150;
-            c = parseInt(c) + 1; localStorage.setItem('sph_v_final_final', c);
+            let c = localStorage.getItem('sph_v_logic_fix') || 150;
+            c = parseInt(c) + 1; localStorage.setItem('sph_v_logic_fix', c);
             document.getElementById('userCountDisplay').innerText = c;
         }
         updateCounter();
@@ -104,11 +98,11 @@
             const mode = document.getElementById("modeSelect").value;
             if(mode === "zero") { currentObjectHeight = 0; } 
             else {
-                let val = (Math.random() * 6 + 1).toFixed(2);
+                let val = (Math.random() * 5 + 1).toFixed(2);
                 currentObjectHeight = mode.startsWith("h") ? parseFloat(val) : -parseFloat(val);
             }
             currentTarget = currentObjectHeight + systemZeroError;
-            document.getElementById("screwSlider").value = 10;
+            document.getElementById("screwSlider").value = 10; // ආරම්භයේදී ඉස්කුරුප්පුව උඩ තියෙන්නේ
             document.getElementById("userAnswer").value = "";
             draw();
         }
@@ -124,7 +118,8 @@
         function draw() {
             let h = parseFloat(document.getElementById("screwSlider").value);
             
-            // CONTACT LOGIC: h අගය currentTarget වලට වඩා අඩු වීමට ඉඩ නොදීම
+            // වැදගත්ම කොටස: ඉස්කුරුප්පුව පහළට යද්දී (h අගය අඩු වෙද්දී) 
+            // Target එකේ වැදුණු සැනින් එතනින් එහාට (පහළට) යන්න බැහැ.
             if (h < currentTarget) { 
                 h = currentTarget; 
                 document.getElementById("screwSlider").value = h; 
@@ -154,13 +149,13 @@
                 ctx.fillRect(cx - 40, baseY + (Math.abs(currentObjectHeight) * scale), 80, 5);
             }
 
-            // FRAME
+            // FIXED LEGS
             ctx.fillStyle = "#777";
             ctx.fillRect(cx - 70, baseY - 120, 140, 12);
             ctx.fillRect(cx - 65, baseY - 110, 8, 110);
             ctx.fillRect(cx + 57, baseY - 110, 8, 110);
 
-            // VERTICAL SCALE (-10 to 10)
+            // LINEAR SCALE (-10 to 10)
             ctx.strokeStyle = "#888"; ctx.lineWidth = 2;
             const lx = cx - 100;
             ctx.beginPath(); 
@@ -174,25 +169,26 @@
                 if(i % 5 === 0) ctx.fillText(i, lx - 8, y + 3);
             }
 
-            // SCREW & DISC
-            const screwY = baseY - (h * scale);
+            // MOVING SCREW
+            const screwBottomY = baseY - (h * scale);
             ctx.fillStyle = "#999"; 
-            ctx.fillRect(cx - 4, screwY - 180, 8, 180); // Shaft
+            ctx.fillRect(cx - 4, screwBottomY - 180, 8, 180); // Screw shaft
             
             ctx.fillStyle = "#ffd700"; 
             ctx.beginPath(); 
-            ctx.ellipse(cx, screwY, 60, 18, 0, 0, 2 * Math.PI); 
+            ctx.ellipse(cx, screwBottomY, 60, 18, 0, 0, 2 * Math.PI); 
             ctx.fill(); ctx.stroke();
             
+            // CIRCULAR SCALE READING
             let v = Math.round((Math.abs(h) % 1) * 100);
             if (h < 0 && v !== 0) v = 100 - v;
             if (v === 100) v = 0;
             ctx.fillStyle = "black"; ctx.font = "bold 13px Arial"; ctx.textAlign = "center";
-            ctx.fillText(v, cx, screwY + 5);
+            ctx.fillText(v, cx, screwBottomY + 5);
 
-            // POINTER
+            // RED POINTER (Linear scale එක මනින්නේ මෙතැනින්)
             ctx.fillStyle = "#ff5252"; ctx.beginPath();
-            ctx.moveTo(lx + 4, screwY); ctx.lineTo(lx + 15, screwY - 8); ctx.lineTo(lx + 15, screwY + 8); ctx.fill();
+            ctx.moveTo(lx + 4, screwBottomY); ctx.lineTo(lx + 15, screwBottomY - 8); ctx.lineTo(lx + 15, screwBottomY + 8); ctx.fill();
         }
         changeObject();
     </script>
