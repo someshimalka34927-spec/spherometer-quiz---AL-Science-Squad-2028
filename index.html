@@ -8,97 +8,80 @@
         :root { --bg: #0f0f0f; --accent: #bb86fc; --success: #00ffcc; --error: #ff5252; --text: #f0f0f0; --card: #1a1a1a; }
         
         body { 
-            background: var(--bg); 
-            color: var(--text); 
-            font-family: 'Segoe UI', sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 10px; 
-            margin: 0; 
-            min-height: 100vh;
-            overflow-x: hidden; /* පසෙකට අකුරු යන එක නවත්වයි */
+            background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; 
+            display: flex; flex-direction: column; align-items: center; 
+            padding: 20px; margin: 0; min-height: 100vh; overflow-x: hidden; 
         }
         
-        .header-section { text-align: center; margin-bottom: 20px; width: 100%; }
-        .logo-container { width: 100px; height: 100px; margin: 0 auto 10px; }
-        .logo-img { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--accent); box-shadow: 0 0 15px rgba(187, 134, 252, 0.4); object-fit: cover; }
-        
-        .main-title { font-size: 1.8em; color: var(--text); margin: 5px 0; font-weight: bold; padding: 0 10px; }
-        .sub-title { font-size: 1.1em; color: var(--accent); letter-spacing: 1px; }
+        .header-section { text-align: center; margin-bottom: 25px; width: 100%; }
+        .logo-container { width: 120px; height: 120px; margin: 0 auto 10px; }
+        .logo-img { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--accent); box-shadow: 0 0 20px rgba(187, 134, 252, 0.4); object-fit: cover; }
+        .main-title { font-size: 2.2em; color: var(--text); margin: 5px 0; font-weight: bold; }
+        .sub-title { font-size: 1.3em; color: var(--accent); letter-spacing: 1px; }
 
         /* Main Wrapper - Desktop Landscape */
         .main-wrapper { 
             display: flex; 
             background: var(--card); 
-            padding: 20px; 
-            border-radius: 25px; 
-            gap: 30px; 
+            padding: 40px; 
+            border-radius: 35px; 
+            gap: 60px; 
             border: 1px solid #333; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.8); 
-            max-width: 95%;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.9); 
             width: fit-content;
-            align-items: flex-start;
+            max-width: 1200px; /* ලොකු තිර වලදී වැඩි පළලක් */
+            align-items: center;
             flex-direction: row;
         }
 
-        canvas { background: #222; border-radius: 15px; border: 1px solid #444; max-width: 100%; height: auto; }
+        canvas { 
+            background: #222; border-radius: 20px; border: 1px solid #444; 
+            width: 480px; height: 650px; /* කැනවස් එක ටිකක් ලොකු කළා */
+        }
         
-        .controls { flex: 1; display: flex; flex-direction: column; gap: 15px; min-width: 320px; max-width: 400px; }
+        .controls { 
+            flex: 1; display: flex; flex-direction: column; gap: 20px; 
+            min-width: 420px; /* පාලක පැනලය පළල් කළා */
+        }
         
         .info-header { 
-            background: rgba(255, 82, 82, 0.1); 
-            padding: 12px; 
-            border-radius: 12px; 
-            border-left: 5px solid var(--error); 
-            font-size: 0.85em; 
-            line-height: 1.5; 
-            text-align: left;
+            background: rgba(255, 82, 82, 0.1); padding: 18px; border-radius: 15px; 
+            border-left: 6px solid var(--error); font-size: 1em; line-height: 1.6; 
         }
 
-        .quiz-panel { background: #252525; padding: 15px; border-radius: 20px; border: 1px solid #3d3d3d; }
-        .input-group { display: flex; gap: 8px; margin-top: 10px; }
+        .quiz-panel { background: #252525; padding: 25px; border-radius: 22px; border: 1px solid #3d3d3d; }
+        .input-group { display: flex; gap: 12px; margin-top: 10px; }
         
-        input[type=number] { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #111; color: white; font-size: 1.1em; text-align: center; width: 60px; }
-        .btn-submit { background: var(--success); color: #000; border: none; padding: 12px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        input[type=number] { flex: 1; padding: 15px; border-radius: 10px; border: 1px solid #444; background: #111; color: white; font-size: 1.3em; text-align: center; }
+        .btn-submit { background: var(--success); color: #000; border: none; padding: 15px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1em; }
+        .btn-submit:hover { background: #00e6b8; transform: scale(1.05); }
         
-        input[type=range] { width: 100%; cursor: pointer; height: 8px; accent-color: var(--accent); margin: 12px 0; }
-        select { padding: 10px; border-radius: 10px; background: #2c2c2c; color: white; border: 1px solid #444; font-size: 0.95em; cursor: pointer; width: 100%; }
+        input[type=range] { width: 100%; cursor: pointer; height: 12px; accent-color: var(--accent); margin: 15px 0; }
+        select { padding: 15px; border-radius: 12px; background: #2c2c2c; color: white; border: 1px solid #444; font-size: 1.1em; cursor: pointer; width: 100%; }
         
-        .visitor-box { background: #1a1a1a; padding: 5px 15px; border-radius: 50px; border: 1px solid #444; display: inline-block; margin-top: 8px; font-family: monospace; color: var(--success); font-size: 0.85em; }
+        .visitor-box { background: #1a1a1a; padding: 8px 20px; border-radius: 50px; border: 1px solid #444; display: inline-block; margin-top: 10px; font-family: monospace; color: var(--success); font-size: 1em; }
 
-        .footer { margin-top: 30px; text-align: center; width: 100%; max-width: 500px; padding-bottom: 20px; }
-        .footer-name { font-size: 1.5em; font-weight: bold; color: var(--accent); margin: 8px 0; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
-        .pointing-emoji { display: inline-block; font-size: 2em; animation: bounce 1s infinite ease-in-out; margin: 5px 0; }
-        .footer-link a { color: var(--success); text-decoration: none; font-weight: bold; font-size: 0.95em; word-break: break-all; }
+        .footer { margin-top: 40px; text-align: center; width: 100%; max-width: 700px; padding-bottom: 40px; }
+        .footer-name { font-size: 1.8em; font-weight: bold; color: var(--accent); margin: 10px 0; }
+        .footer-link a { color: var(--success); text-decoration: none; font-weight: bold; font-size: 1.2em; }
 
-        /* Mobile Optimization Fix */
-        @media (max-width: 850px) {
-            .main-wrapper { 
-                flex-direction: column; 
-                align-items: center; 
-                gap: 20px; 
-                padding: 15px;
-                width: 95%; /* ෆෝන් එකේදී මුළු පළලම ගනියි */
-            }
-            .controls { 
-                min-width: 100%; 
-                max-width: 100%; 
-            }
-            .main-title { font-size: 1.5em; }
-            canvas { width: 100%; height: auto; }
+        /* Mobile Optimization: ෆෝන් එකේදී පරණ සයිස් එකටම එනවා */
+        @media (max-width: 1000px) {
+            .main-wrapper { flex-direction: column; align-items: center; gap: 30px; padding: 20px; width: 95%; }
+            .controls { min-width: 100%; max-width: 100%; }
+            canvas { width: 100%; height: auto; max-width: 400px; }
+            .main-title { font-size: 1.6em; }
         }
 
         #congrats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; background: rgba(0,0,0,0.85); }
-        .congrats-text { font-size: 3em; font-weight: 900; color: var(--success); text-shadow: 0 0 20px var(--success); }
+        .congrats-text { font-size: 4em; font-weight: 900; color: var(--success); text-shadow: 0 0 30px var(--success); }
     </style>
 </head>
 <body>
 
     <div id="congrats-overlay">
         <div class="congrats-text">EXCELLENT!</div>
-        <div style="font-size: 1.2em; color: white; margin-top: 10px;">මිනුම නිවැරදියි! 🎊</div>
+        <div style="font-size: 1.5em; color: white; margin-top: 10px;">මිනුම නිවැරදියි! 🎊</div>
     </div>
 
     <div class="header-section">
@@ -111,13 +94,13 @@
     </div>
 
     <div class="main-wrapper">
-        <canvas id="labCanvas" width="400" height="550"></canvas>
+        <canvas id="labCanvas" width="480" height="650"></canvas>
 
         <div class="controls">
             <div class="info-header">
                 <b>භාවිතා කරන ආකාරය:</b><br>
                 1. <b>Zero Reference</b> තෝරා දෝෂය බලන්න.<br>
-                2. වස්තුව තෝරා, ඉස්කුරුප්පුව කරකවා නිවැරදි මිනුම ලබාගන්න.
+                2. වස්තුව තෝරා, ඉස්කුරුප්පුව කරකවා නිවැරදි මිනුම (True Reading) ලබාගන්න.
             </div>
 
             <label>භාණ්ඩය තෝරන්න:</label>
@@ -126,6 +109,7 @@
                 <optgroup label="උස මැනීම (Height)">
                     <option value="h1">වීදුරු තැටිය</option><option value="h2">සිහින් කාසිය</option>
                     <option value="h3">ලෝහ පත්‍රය</option><option value="h4">ප්ලාස්ටික් කාඩ්පත</option>
+                    <option value="h5">කුඩා බැටරිය</option>
                 </optgroup>
                 <optgroup label="ගැඹුර මැනීම (Depth)">
                     <option value="d1">කුඩා සිදුර</option><option value="d7">කාච පෘෂ්ඨය</option>
@@ -134,10 +118,10 @@
 
             <label>ඉස්කුරුප්පුව කරකවන්න:</label>
             <input type="range" id="screwSlider" min="-10" max="10" step="0.01" value="8" oninput="draw()">
-            <div id="status" style="text-align:center; font-weight:bold; color:var(--success); height:20px; font-size: 0.9em;"></div>
+            <div id="status" style="text-align:center; font-weight:bold; color:var(--success); height:25px; font-size: 1.1em;"></div>
 
             <div class="quiz-panel">
-                <label>පිළිතුර (mm):</label>
+                <label>පිළිතුර ඇතුළත් කරන්න (mm):</label>
                 <div class="input-group">
                     <input type="number" id="userAnswer" step="0.01" placeholder="0.00" onkeypress="handleEnter(event)">
                     <button class="btn-submit" onclick="checkAnswer()">Submit</button>
@@ -147,15 +131,12 @@
     </div>
 
     <div class="footer">
-        <div class="invite-text">අපගේ සමූහයට සම්බන්ධ වන්න</div>
-        <div class="pointing-emoji">👇</div>
         <div class="footer-name">AL Science Squad 2028</div>
         <div class="footer-link"><a href="https://t.me/AL2028Everything" target="_blank">https://t.me/AL2028Everything</a></div>
     </div>
 
     <script>
         function handleEnter(e) { if (e.key === "Enter" || e.keyCode === 13) { checkAnswer(); } }
-
         let count = localStorage.getItem('spherometer_v') || 150;
         count = parseInt(count) + 1;
         localStorage.setItem('spherometer_v', count);
@@ -171,7 +152,7 @@
             const mode = document.getElementById("modeSelect").value;
             if(mode === "zero") { currentObjectHeight = 0; } 
             else {
-                let val = (Math.random() * 6 + 1).toFixed(2);
+                let val = (Math.random() * 6 + 1.2).toFixed(2);
                 currentObjectHeight = mode.startsWith("h") ? parseFloat(val) : -parseFloat(val);
             }
             currentTarget = currentObjectHeight + systemZeroError;
@@ -191,7 +172,7 @@
 
         function draw() {
             let h = parseFloat(document.getElementById("screwSlider").value);
-            const target = currentTarget; const baseY = 380; const scale = 18;
+            const target = currentTarget; const baseY = 420; const scale = 22; // Scale එක වැඩි කළා
             const statusBox = document.getElementById("status");
 
             if (h < target) { h = target; document.getElementById("screwSlider").value = h; 
@@ -203,28 +184,28 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#333";
             if (currentObjectHeight < 0) {
-                ctx.fillRect(40, baseY, 130, 130); ctx.fillRect(230, baseY, 130, 130);
-                ctx.fillStyle = "#555"; ctx.fillRect(170, baseY + (Math.abs(currentObjectHeight) * scale), 60, 8);
+                ctx.fillRect(40, baseY, 150, 150); ctx.fillRect(290, baseY, 150, 150);
+                ctx.fillStyle = "#555"; ctx.fillRect(190, baseY + (Math.abs(currentObjectHeight) * scale), 100, 10);
             } else {
-                ctx.fillRect(40, baseY, 320, 20);
-                if (currentObjectHeight > 0) { ctx.fillStyle = "#555"; ctx.fillRect(170, baseY - (currentObjectHeight * scale), 60, currentObjectHeight * scale); }
+                ctx.fillRect(40, baseY, 400, 25);
+                if (currentObjectHeight > 0) { ctx.fillStyle = "#555"; ctx.fillRect(190, baseY - (currentObjectHeight * scale), 100, currentObjectHeight * scale); }
             }
-            ctx.fillStyle = "#888"; ctx.fillRect(100, baseY - 160, 200, 15);
-            ctx.fillRect(110, baseY - 145, 10, 145); ctx.fillRect(280, baseY - 145, 10, 145);
-            ctx.strokeStyle = "#888"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(80, 50); ctx.lineTo(80, 500); ctx.stroke();
-            ctx.fillStyle = "#aaa"; ctx.font = "11px Arial"; ctx.textAlign = "right";
+            ctx.fillStyle = "#888"; ctx.fillRect(120, baseY - 200, 240, 18);
+            ctx.fillRect(130, baseY - 182, 12, 182); ctx.fillRect(338, baseY - 182, 12, 182);
+            ctx.strokeStyle = "#888"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(90, 50); ctx.lineTo(90, 550); ctx.stroke();
+            ctx.fillStyle = "#aaa"; ctx.font = "13px Arial"; ctx.textAlign = "right";
             for(let i=-10; i<=15; i++) {
-                let y = (baseY - 160) - (i * scale);
-                ctx.moveTo(75, y); ctx.lineTo(80, y); ctx.stroke();
-                if(i % 5 === 0) ctx.fillText(i, 70, y + 4);
+                let y = (baseY - 200) - (i * scale);
+                ctx.moveTo(82, y); ctx.lineTo(90, y); ctx.stroke();
+                if(i % 5 === 0) ctx.fillText(i, 78, y + 5);
             }
-            const sPos = (baseY - 160) - (h * scale);
-            ctx.fillStyle = "#aaa"; ctx.fillRect(197, sPos - 30, 6, 190);
-            ctx.beginPath(); ctx.moveTo(195, sPos + 160); ctx.lineTo(205, sPos + 160); ctx.lineTo(200, sPos + 172); ctx.fill();
+            const sPos = (baseY - 200) - (h * scale);
+            ctx.fillStyle = "#aaa"; ctx.fillRect(235, sPos - 40, 8, 240);
+            ctx.beginPath(); ctx.moveTo(230, sPos + 200); ctx.lineTo(250, sPos + 200); ctx.lineTo(240, sPos + 215); ctx.fill();
             let vsc = Math.round((Math.abs(h) % 1) * 100); if (h < 0 && vsc !== 0) vsc = 100 - vsc;
-            ctx.fillStyle = "#ffd700"; ctx.beginPath(); ctx.ellipse(200, sPos, 75, 20, 0, 0, 2 * Math.PI); ctx.fill();
-            ctx.strokeStyle = "#000"; ctx.stroke(); ctx.fillStyle = "black"; ctx.font = "bold 14px Arial"; ctx.textAlign = "center"; ctx.fillText(vsc, 200, sPos + 5);
-            ctx.fillStyle = "#ff5252"; ctx.beginPath(); ctx.moveTo(85, sPos); ctx.lineTo(95, sPos-8); ctx.lineTo(95, sPos+8); ctx.fill();
+            ctx.fillStyle = "#ffd700"; ctx.beginPath(); ctx.ellipse(240, sPos, 90, 25, 0, 0, 2 * Math.PI); ctx.fill();
+            ctx.strokeStyle = "#000"; ctx.stroke(); ctx.fillStyle = "black"; ctx.font = "bold 16px Arial"; ctx.textAlign = "center"; ctx.fillText(vsc, 240, sPos + 6);
+            ctx.fillStyle = "#ff5252"; ctx.beginPath(); ctx.moveTo(100, sPos); ctx.lineTo(115, sPos-12); ctx.lineTo(115, sPos+12); ctx.fill();
         }
         changeObject();
     </script>
