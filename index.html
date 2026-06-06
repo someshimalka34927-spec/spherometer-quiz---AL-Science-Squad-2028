@@ -6,44 +6,67 @@
     <title>Spherometer Lab - AL Science Squad</title>
     <style>
         :root { --bg: #0f0f0f; --accent: #bb86fc; --success: #00ffcc; --error: #ff5252; --text: #f0f0f0; --card: #1a1a1a; }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; min-height: 100vh; }
         
-        /* Logo Styling */
-        .header-section { text-align: center; margin-bottom: 25px; margin-top: 10px; }
-        .logo-container { width: 130px; height: 130px; margin: 0 auto 15px; position: relative; }
-        .logo-img { 
-            width: 100%; height: 100%; border-radius: 50%; 
-            border: 3px solid var(--accent); box-shadow: 0 0 25px rgba(187, 134, 252, 0.5);
-            object-fit: cover; display: block;
-        }
-        .main-title { font-size: 2.2em; color: var(--text); margin: 5px 0; font-weight: bold; }
-        .sub-title { font-size: 1.4em; color: var(--accent); letter-spacing: 1px; margin-bottom: 10px; }
+        /* Header Section */
+        .header-section { text-align: center; margin-bottom: 25px; width: 100%; }
+        .logo-container { width: 110px; height: 110px; margin: 0 auto 10px; }
+        .logo-img { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--accent); box-shadow: 0 0 20px rgba(187, 134, 252, 0.4); object-fit: cover; }
+        .main-title { font-size: 2em; color: var(--text); margin: 5px 0; font-weight: bold; }
+        .sub-title { font-size: 1.2em; color: var(--accent); letter-spacing: 1px; }
 
-        .container { display: flex; background: var(--card); padding: 30px; border-radius: 25px; gap: 40px; border: 1px solid #333; box-shadow: 0 20px 60px rgba(0,0,0,0.8); flex-wrap: wrap; justify-content: center; }
-        canvas { background: #222; border-radius: 15px; border: 1px solid #444; max-width: 100%; height: auto; }
-        .controls { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 15px; }
-        .info-header { background: rgba(255, 82, 82, 0.1); padding: 15px; border-radius: 12px; border-left: 5px solid var(--error); font-size: 0.9em; }
+        /* Landscape Layout Container */
+        .main-wrapper { 
+            display: flex; 
+            background: var(--card); 
+            padding: 30px; 
+            border-radius: 30px; 
+            gap: 50px; 
+            border: 1px solid #333; 
+            box-shadow: 0 25px 70px rgba(0,0,0,0.9); 
+            max-width: 1000px; /* ලෑන්ඩ්ස්කේප් පෙනුම සඳහා පළල වැඩි කළා */
+            align-items: flex-start;
+            flex-direction: row; /* අනිවාර්යයෙන්ම දෙපසට පෙන්වීමට */
+        }
+
+        canvas { background: #222; border-radius: 20px; border: 1px solid #444; flex-shrink: 0; }
+        
+        .controls { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 18px; 
+            min-width: 380px; 
+        }
+
+        .info-header { background: rgba(255, 82, 82, 0.1); padding: 15px; border-radius: 12px; border-left: 5px solid var(--error); font-size: 0.9em; line-height: 1.6; }
         .quiz-panel { background: #252525; padding: 20px; border-radius: 20px; border: 1px solid #3d3d3d; }
         .input-group { display: flex; gap: 10px; margin-top: 10px; }
+        
         input[type=number] { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #111; color: white; font-size: 1.2em; text-align: center; }
         .btn-submit { background: var(--success); color: #000; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-submit:hover { transform: scale(1.05); background: #00e6b8; }
+        
         input[type=range] { width: 100%; cursor: pointer; height: 10px; accent-color: var(--accent); margin: 15px 0; }
         select { padding: 12px; border-radius: 12px; background: #2c2c2c; color: white; border: 1px solid #444; font-size: 1em; cursor: pointer; width: 100%; }
         
-        .visitor-box { background: #1a1a1a; padding: 8px 20px; border-radius: 50px; border: 1px solid #444; display: inline-block; margin-top: 10px; font-family: monospace; color: var(--success); font-size: 0.9em; }
+        .visitor-box { background: #1a1a1a; padding: 6px 18px; border-radius: 50px; border: 1px solid #444; display: inline-block; margin-top: 10px; font-family: monospace; color: var(--success); }
 
-        .footer { margin-top: 40px; text-align: center; max-width: 600px; padding-bottom: 40px; }
-        .invite-text { color: #e0e0e0; font-size: 1.05em; margin-bottom: 5px; }
-        .footer-name { font-size: 1.8em; font-weight: bold; color: var(--accent); letter-spacing: 1px; margin: 10px 0; }
-        
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
-        .pointing-emoji { display: inline-block; font-size: 2.5em; animation: bounce 1s infinite ease-in-out; margin: 5px 0; cursor: default; }
-        .footer-link a { color: var(--success); text-decoration: none; font-size: 1.1em; font-weight: bold; border-bottom: 1px solid transparent; transition: 0.3s; }
-        .footer-link a:hover { border-bottom: 1px solid var(--success); }
+        /* Footer */
+        .footer { margin-top: 40px; text-align: center; max-width: 700px; padding-bottom: 30px; }
+        .footer-name { font-size: 1.7em; font-weight: bold; color: var(--accent); margin: 10px 0; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+        .pointing-emoji { display: inline-block; font-size: 2.2em; animation: bounce 1s infinite ease-in-out; margin: 5px 0; }
+        .footer-link a { color: var(--success); text-decoration: none; font-weight: bold; font-size: 1.1em; }
 
-        #congrats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; background: rgba(0,0,0,0.8); }
-        .congrats-text { font-size: clamp(2em, 8vw, 4em); font-weight: 900; color: var(--success); text-shadow: 0 0 30px var(--success); }
+        /* Mobile Optimization: ෆෝන් එකකින් බලද්දී පමණක් Portrait වීමට */
+        @media (max-width: 900px) {
+            .main-wrapper { flex-direction: column; align-items: center; gap: 30px; padding: 20px; }
+            .controls { min-width: 100%; }
+        }
+
+        #congrats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; background: rgba(0,0,0,0.85); }
+        .congrats-text { font-size: 4em; font-weight: 900; color: var(--success); text-shadow: 0 0 30px var(--success); }
     </style>
 </head>
 <body>
@@ -55,44 +78,47 @@
 
     <div class="header-section">
         <div class="logo-container">
-            <img src="photo_2026-06-02_10-22-04.jpg" alt="AL Science Squad Logo" class="logo-img">
+            <img src="photo_2026-06-02_10-22-04.jpg" alt="Logo" class="logo-img">
         </div>
         <div class="main-title">ගෝලමානය AI Simulation</div>
         <div class="sub-title">AL Science Squad 2028</div>
         <div class="visitor-box">🌐 පරිශීලකයන්: <span id="count">150+</span></div>
     </div>
 
-    <div class="container">
+    <div class="main-wrapper">
         <canvas id="labCanvas" width="450" height="600"></canvas>
+
         <div class="controls">
             <div class="info-header">
-                <b>පියවර:</b><br>
-                1. <b>Zero Reference</b> මගින් නියත දෝෂය කියවන්න.<br>
-                2. වස්තුව තෝරා පාඨාංකය ගෙන දෝෂය නිවැරදි කරන්න.
+                <b>භාවිතා කරන ආකාරය:</b><br>
+                1. මුලින්ම <b>Zero Reference</b> තෝරා දෝෂය බලන්න.<br>
+                2. ඉන්පසු වස්තුවක් තෝරා, ඉස්කුරුප්පුව කරකවා නිවැරදි මිනුම (True Reading) ගණනය කරන්න.
             </div>
-            <label>මැනිය යුතු භාණ්ඩය:</label>
-            <select id="modeSelect" onchange="changeObject()">
-                <option value="zero">ශූන්‍ය සැකසුම (Zero Reference)</option>
-                <optgroup label="උස මැනීම (Height)">
-                    <option value="h1">වීදුරු තැටිය</option><option value="h2">සිහින් කාසිය</option>
-                    <option value="h3">ලෝහ පත්‍රය</option><option value="h4">ප්ලාස්ටික් කාඩ්පත</option>
-                    <option value="h5">සිලිකන් චිපය</option><option value="h6">කුඩා බැටරිය</option>
-                    <option value="h7">වීදුරු කදාව</option><option value="h8">ලී කුට්ටිය</option>
-                    <option value="h9">සබන් කැටය</option><option value="h10">මකනය</option>
-                </optgroup>
-                <optgroup label="ගැඹුර මැනීම (Depth)">
-                    <option value="d1">කුඩා සිදුර</option><option value="d2">තීන්ත කුප්පිය</option>
-                    <option value="d3">ලෝහ සොකට්ටුව</option><option value="d4">ගැඹුරු ඇගිල්ල</option>
-                    <option value="d5">නලයේ ගැඹුර</option><option value="d6">කුඩා බඳුන</option>
-                    <option value="d7">කාච පෘෂ්ඨය</option><option value="d8">පියනක ගැඹුර</option>
-                    <option value="d9">රිං එකක ගැඹුර</option><option value="d10">සිහින් නාලය</option>
-                </optgroup>
-            </select>
-            <label>ඉස්කුරුප්පුව හසුරුවන්න:</label>
-            <input type="range" id="screwSlider" min="-10" max="10" step="0.01" value="8" oninput="draw()">
-            <div id="status" style="text-align:center; font-weight:bold; font-size:1.1em; height:25px;"></div>
+
+            <div style="display:flex; flex-direction:column; gap:8px;">
+                <label>මැනිය යුතු භාණ්ඩය තෝරන්න:</label>
+                <select id="modeSelect" onchange="changeObject()">
+                    <option value="zero">ශූන්‍ය සැකසුම (Zero Reference)</option>
+                    <optgroup label="උස මැනීම (Height)">
+                        <option value="h1">වීදුරු තැටිය</option><option value="h2">සිහින් කාසිය</option>
+                        <option value="h3">ලෝහ පත්‍රය</option><option value="h4">ප්ලාස්ටික් කාඩ්පත</option>
+                        <option value="h5">සිලිකන් චිපය</option><option value="h6">කුඩා බැටරිය</option>
+                    </optgroup>
+                    <optgroup label="ගැඹුර මැනීම (Depth)">
+                        <option value="d1">කුඩා සිදුර</option><option value="d2">තීන්ත කුප්පිය</option>
+                        <option value="d7">කාච පෘෂ්ඨය</option>
+                    </optgroup>
+                    </select>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:5px;">
+                <label>ඉස්කුරුප්පුව කරකවන්න:</label>
+                <input type="range" id="screwSlider" min="-10" max="10" step="0.01" value="8" oninput="draw()">
+                <div id="status" style="text-align:center; font-weight:bold; color:var(--success); height:25px;"></div>
+            </div>
+
             <div class="quiz-panel">
-                <label>නිවැරදි කළ පාඨාංකය (mm):</label>
+                <label>ඔබේ පිළිතුර ඇතුලත් කරන්න (mm):</label>
                 <div class="input-group">
                     <input type="number" id="userAnswer" step="0.01" placeholder="0.00">
                     <button class="btn-submit" onclick="checkAnswer()">Submit</button>
@@ -109,11 +135,11 @@
     </div>
 
     <script>
-        // Simple counter logic
-        let visits = localStorage.getItem('spherometer_visits') || 150;
-        visits = parseInt(visits) + 1;
-        localStorage.setItem('spherometer_visits', visits);
-        document.getElementById('count').innerText = visits + "+";
+        // Visitor Counter
+        let count = localStorage.getItem('spherometer_v') || 150;
+        count = parseInt(count) + 1;
+        localStorage.setItem('spherometer_v', count);
+        document.getElementById('count').innerText = count + "+";
 
         const canvas = document.getElementById("labCanvas");
         const ctx = canvas.getContext("2d");
@@ -125,7 +151,7 @@
             const mode = document.getElementById("modeSelect").value;
             if(mode === "zero") { currentObjectHeight = 0; } 
             else {
-                let val = (Math.random() * 7 + 1.2).toFixed(2);
+                let val = (Math.random() * 6 + 1).toFixed(2);
                 currentObjectHeight = mode.startsWith("h") ? parseFloat(val) : -parseFloat(val);
             }
             currentTarget = currentObjectHeight + systemZeroError;
@@ -138,7 +164,7 @@
             if (Math.abs(userVal - currentObjectHeight) < 0.015) {
                 document.getElementById("congrats-overlay").style.display = "flex";
                 setTimeout(() => { document.getElementById("congrats-overlay").style.display = "none"; }, 3500);
-            } else { alert("වැරදියි! නියත දෝෂය නිවැරදිව සැලකූ බව සහතික කරගන්න."); }
+            } else { alert("පිළිතුර වැරදියි. නැවත උත්සාහ කරන්න!"); }
         }
 
         function draw() {
