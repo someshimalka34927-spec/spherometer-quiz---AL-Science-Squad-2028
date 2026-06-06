@@ -87,18 +87,28 @@
             <select id="modeSelect" onchange="changeObject()">
                 <option value="zero">ශූන්‍ය සැකසුම (Zero Reference)</option>
                 <optgroup label="උස මැනීම (Height)">
-                    <option value="h1">වීදුරු තැටිය</option><option value="h2">සිහින් කාසිය</option>
-                    <option value="h3">ලෝහ පත්‍රය</option><option value="h4">ප්ලාස්ටික් කාඩ්පත</option>
-                    <option value="h5">සිලිකන් චිපය</option><option value="h6">කුඩා බැටරිය</option>
-                    <option value="h7">වීදුරු කදාව</option><option value="h8">ලී කුට්ටිය</option>
-                    <option value="h9">සබන් කැටය</option><option value="h10">මකනය</option>
+                    <option value="h1">වීදුරු තැටිය</option>
+                    <option value="h2">සිහින් කාසිය</option>
+                    <option value="h3">ලෝහ පත්‍රය</option>
+                    <option value="h4">ප්ලාස්ටික් කාඩ්පත</option>
+                    <option value="h5">සිලිකන් චිපය</option>
+                    <option value="h6">කුඩා බැටරිය</option>
+                    <option value="h7">වීදුරු කදාව</option>
+                    <option value="h8">ලී කුට්ටිය</option>
+                    <option value="h9">සබන් කැටය</option>
+                    <option value="h10">මකනය</option>
                 </optgroup>
                 <optgroup label="ගැඹුර මැනීම (Depth)">
-                    <option value="d1">කුඩා සිදුර</option><option value="d2">තීන්ත කුප්පිය</option>
-                    <option value="d3">ලෝහ සොකට්ටුව</option><option value="d4">ගැඹුරු ඇඟිල්ල</option>
-                    <option value="d5">නලයේ ගැඹුර</option><option value="d6">කුඩා බඳුන</option>
-                    <option value="d7">කාච පෘෂ්ඨය</option><option value="d8">පියනක ගැඹුර</option>
-                    <option value="d9">රිං එකක ගැඹුර</option><option value="d10">සිහින් නාලය</option>
+                    <option value="d1">කුඩා සිදුර</option>
+                    <option value="d2">තීන්ත කුප්පිය</option>
+                    <option value="d3">ලෝහ සොකට්ටුව</option>
+                    <option value="d4">ගැඹුරු ඇඟිල්ල</option>
+                    <option value="d5">නලයේ ගැඹුර</option>
+                    <option value="d6">කුඩා බඳුන</option>
+                    <option value="d7">කාච පෘෂ්ඨය</option>
+                    <option value="d8">පියනක ගැඹුර</option>
+                    <option value="d9">රිං එකක ගැඹුර</option>
+                    <option value="d10">සිහින් නාලය</option>
                 </optgroup>
             </select>
 
@@ -138,7 +148,8 @@
             const mode = document.getElementById("modeSelect").value;
             if(mode === "zero") { currentObjectHeight = 0; } 
             else {
-                let val = (Math.random() * 7 + 1.2).toFixed(2);
+                // Random height generator between 1mm and 7mm
+                let val = (Math.random() * 6 + 1).toFixed(2);
                 currentObjectHeight = mode.startsWith("h") ? parseFloat(val) : -parseFloat(val);
             }
             currentTarget = currentObjectHeight + systemZeroError;
