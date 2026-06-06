@@ -14,7 +14,7 @@
         .visitor-box { background: rgba(0, 255, 204, 0.1); padding: 4px 12px; border-radius: 50px; border: 1px solid var(--success); display: inline-block; margin-bottom: 8px; color: var(--success); font-size: 0.75em; }
         .main-wrapper { display: flex; flex-direction: column; background: var(--card); padding: 10px; border-radius: 15px; gap: 10px; border: 1px solid #333; width: 98%; max-width: 500px; align-items: center; }
         @media (min-width: 850px) { .main-wrapper { flex-direction: row; max-width: 900px; padding: 20px; } .main-title { font-size: 1.6em; } }
-        .canvas-container { width: 100%; max-width: 360px; flex-shrink: 0; }
+        .canvas-container { width: 100%; max-width: 360px; }
         canvas { background: #151515; border-radius: 10px; border: 1px solid #444; width: 100% !important; height: auto !important; display: block; }
         .controls { flex: 1; display: flex; flex-direction: column; gap: 8px; width: 100%; }
         .info-header { background: rgba(255, 82, 82, 0.1); padding: 8px; border-radius: 8px; border-left: 4px solid var(--error); font-size: 0.75em; }
@@ -26,8 +26,6 @@
         select { padding: 10px; border-radius: 8px; background: #2c2c2c; color: white; border: 1px solid #444; width: 100%; font-size: 0.9em; }
         .footer { margin-top: 20px; text-align: center; padding: 15px; width: 100%; }
         .footer-name { font-size: 1.2em; font-weight: bold; color: var(--accent); margin: 5px 0; }
-        .pointing-down { font-size: 1.8em; animation: bounceY 1s infinite; }
-        @keyframes bounceY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
         #congrats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; background: rgba(0,0,0,0.9); }
     </style>
 </head>
@@ -50,10 +48,7 @@
         </div>
 
         <div class="controls">
-            <div class="info-header">
-                <b>භාවිතා කරන ආකාරය:</b><br>
-                Slider එක මගින් ඉස්කුරුප්පුව කරකවන්න. CONTACT වූ පසු නිවැරදි mm අගය ඇතුළත් කරන්න.
-            </div>
+            <div class="info-header"><b>භාවිතය:</b> භාණ්ඩය තෝරා Slider එක කරකවන්න. CONTACT වූ පසු mm අගය ඇතුළත් කරන්න.</div>
 
             <select id="modeSelect" onchange="changeObject()">
                 <option value="zero">ශූන්‍ය සැකසුම (Zero Reference)</option>
@@ -73,13 +68,13 @@
                 </optgroup>
             </select>
 
-            <input type="range" id="screwSlider" min="-10" max="10" step="0.01" value="8" oninput="draw()">
+            <input type="range" id="screwSlider" min="-10.0" max="10.0" step="0.01" value="10" oninput="draw()">
             <div id="status" style="text-align:center; font-weight:bold; color:var(--success); height:20px; font-size: 0.8em;"></div>
 
             <div class="quiz-panel">
                 <label style="font-size: 0.8em;">පාඨාංකය (mm):</label>
                 <div class="input-group">
-                    <input type="number" id="userAnswer" step="0.01" placeholder="0.00" onkeypress="handleEnter(event)">
+                    <input type="number" id="userAnswer" step="0.01" placeholder="0.00">
                     <button class="btn-submit" onclick="checkAnswer()">Submit</button>
                 </div>
             </div>
@@ -88,17 +83,13 @@
 
     <div class="footer">
         <h2 class="footer-name">AL Science Squad 2028</h2>
-        <div class="pointing-down">👇</div>
-        <div class="footer-link">
-            <a href="https://t.me/AL2028Everything" target="_blank" style="color:var(--success); text-decoration:none; font-weight:bold;">Join Telegram Group</a>
-        </div>
+        <a href="https://t.me/AL2028Everything" target="_blank" style="color:var(--success); text-decoration:none; font-weight:bold;">Join Telegram Group</a>
     </div>
 
     <script>
         function updateCounter() {
-            let c = localStorage.getItem('sph_v_final_1') || 150;
-            c = parseInt(c) + 1;
-            localStorage.setItem('sph_v_final_1', c);
+            let c = localStorage.getItem('sph_v_final_final') || 150;
+            c = parseInt(c) + 1; localStorage.setItem('sph_v_final_final', c);
             document.getElementById('userCountDisplay').innerText = c;
         }
         updateCounter();
@@ -108,8 +99,6 @@
         let currentObjectHeight = 0;
         let systemZeroError = (Math.random() * 0.10 - 0.05);
         let currentTarget = systemZeroError;
-
-        function handleEnter(e) { if (e.key === "Enter") checkAnswer(); }
 
         function changeObject() {
             const mode = document.getElementById("modeSelect").value;
@@ -134,7 +123,8 @@
 
         function draw() {
             let h = parseFloat(document.getElementById("screwSlider").value);
-            // Contact වූ පසු පහළට යාම වැළැක්වීම
+            
+            // CONTACT LOGIC: h අගය currentTarget වලට වඩා අඩු වීමට ඉඩ නොදීම
             if (h < currentTarget) { 
                 h = currentTarget; 
                 document.getElementById("screwSlider").value = h; 
@@ -146,39 +136,36 @@
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const cx = canvas.width / 2;
-            const baseY = 240; // පරිමාණයේ 0 පිහිටීම
+            const baseY = 240; 
             const scale = 20;
 
-            // වස්තුව (Object) ඇඳීම
+            // DRAW OBJECT
             ctx.fillStyle = "#333";
             if (currentObjectHeight >= 0) {
-                // Plane surface
                 ctx.fillRect(cx - 120, baseY, 240, 10);
                 if(currentObjectHeight > 0) {
                     ctx.fillStyle = "#555";
                     ctx.fillRect(cx - 35, baseY - (currentObjectHeight * scale), 70, currentObjectHeight * scale);
                 }
             } else {
-                // Hole / Depth drawing
                 ctx.fillRect(cx - 120, baseY, 80, 180);
                 ctx.fillRect(cx + 40, baseY, 80, 180);
                 ctx.fillStyle = "#222";
                 ctx.fillRect(cx - 40, baseY + (Math.abs(currentObjectHeight) * scale), 80, 5);
             }
 
-            // Spherometer Legs (නිශ්චල පාද)
+            // FRAME
             ctx.fillStyle = "#777";
-            ctx.fillRect(cx - 70, baseY - 120, 140, 12); // Frame top
-            ctx.fillRect(cx - 65, baseY - 110, 8, 110);  // Left leg
-            ctx.fillRect(cx + 57, baseY - 110, 8, 110);  // Right leg
+            ctx.fillRect(cx - 70, baseY - 120, 140, 12);
+            ctx.fillRect(cx - 65, baseY - 110, 8, 110);
+            ctx.fillRect(cx + 57, baseY - 110, 8, 110);
 
-            // Linear Scale (-10 to +10)
+            // VERTICAL SCALE (-10 to 10)
             ctx.strokeStyle = "#888"; ctx.lineWidth = 2;
             const lx = cx - 100;
             ctx.beginPath(); 
             ctx.moveTo(lx, baseY - (10 * scale) - 20); 
-            ctx.lineTo(lx, baseY + (10 * scale) + 20); 
-            ctx.stroke();
+            ctx.lineTo(lx, baseY + (10 * scale) + 20); ctx.stroke();
             
             ctx.fillStyle = "#aaa"; ctx.font = "10px Arial"; ctx.textAlign = "right";
             for(let i = -10; i <= 10; i++) {
@@ -187,36 +174,25 @@
                 if(i % 5 === 0) ctx.fillText(i, lx - 8, y + 3);
             }
 
-            // Screw & Circular Scale
-            // ඉස්කුරුප්පුවේ පහළ කෙළවර හරියටම baseY - (h * scale) විය යුතුයි
-            const screwBottomY = baseY - (h * scale);
-            const discY = screwBottomY; // වෘත්තාකාර පරිමාණය ඉස්කුරුප්පුවේ පහළට ආසන්නව
-
-            // Screw Shaft
+            // SCREW & DISC
+            const screwY = baseY - (h * scale);
             ctx.fillStyle = "#999"; 
-            ctx.fillRect(cx - 4, discY - 180, 8, 180); 
-
-            // Circular Disc
+            ctx.fillRect(cx - 4, screwY - 180, 8, 180); // Shaft
+            
             ctx.fillStyle = "#ffd700"; 
             ctx.beginPath(); 
-            ctx.ellipse(cx, discY, 60, 18, 0, 0, 2 * Math.PI); 
-            ctx.fill();
-            ctx.strokeStyle = "#000"; 
-            ctx.stroke();
+            ctx.ellipse(cx, screwY, 60, 18, 0, 0, 2 * Math.PI); 
+            ctx.fill(); ctx.stroke();
             
-            // Circular Scale Reading
             let v = Math.round((Math.abs(h) % 1) * 100);
             if (h < 0 && v !== 0) v = 100 - v;
+            if (v === 100) v = 0;
             ctx.fillStyle = "black"; ctx.font = "bold 13px Arial"; ctx.textAlign = "center";
-            ctx.fillText(v, cx, discY + 5);
+            ctx.fillText(v, cx, screwY + 5);
 
-            // Red Pointer (Linear scale එක මැනීමට)
-            ctx.fillStyle = "#ff5252"; 
-            ctx.beginPath();
-            ctx.moveTo(lx + 4, discY); 
-            ctx.lineTo(lx + 15, discY - 8); 
-            ctx.lineTo(lx + 15, discY + 8); 
-            ctx.fill();
+            // POINTER
+            ctx.fillStyle = "#ff5252"; ctx.beginPath();
+            ctx.moveTo(lx + 4, screwY); ctx.lineTo(lx + 15, screwY - 8); ctx.lineTo(lx + 15, screwY + 8); ctx.fill();
         }
         changeObject();
     </script>
